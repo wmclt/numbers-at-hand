@@ -18,7 +18,7 @@ function setupGeneratingButton(elementId, messageId, func) {
 
 function initUiValue(elementId, messageId) {
   try {
-  document.getElementById(elementId).innerHTML = chrome.i18n.getMessage(messageId);
+    document.getElementById(elementId).innerHTML = chrome.i18n.getMessage(messageId);
   }
   catch(err) {
     ; //[Uncaught TypeError: Cannot read property 'getMessage' of undefined] if webpage loaded directly
@@ -81,15 +81,29 @@ function getRandomIban() {
 }
 
 function resetStatus(text) {
+  try {
+    var str = chrome.i18n.getMessage("defaultStatus");
+  }
+  catch(err) {
+    var str = 'Click a number-type to generate it';
+  }
+
   var stat = document.getElementById('status');
-	stat.innerHTML = 'Click a number-type to generate it';
+	stat.innerHTML = str;
 	stat.classList.add("list-group-item-secondary");
 	stat.classList.remove("list-group-item-success");
 }
 
 function setStatus(text) {
+  try {
+    var str = chrome.i18n.getMessage("copiedToClipboard",[text]);
+  }
+  catch(err) {
+    var str = text + ' copied to clipboard';
+  }
+
   var stat = document.getElementById('status');
-	stat.innerHTML = text + ' copied to clipboard';
+	stat.innerHTML = str;
 	stat.classList.add("list-group-item-success");
 	stat.classList.remove("list-group-item-secondary");
 }

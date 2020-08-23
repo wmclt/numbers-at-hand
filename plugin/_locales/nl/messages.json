@@ -25,5 +25,14 @@
 	},
 	"defaultStatus": {
 		"message": "Klik op een type om te genereren"
+	},
+	"copiedToClipboard": {
+		"message": "$value$ op klembord gezet",
+		"placeholders": {
+          "value": {
+            "content": "$1",
+            "example": "1234567890"
+          }
+        }
 	}
 }
