@@ -1,9 +1,10 @@
 {
 	"manifest_version": 2,
 
-	"name": "Numbers at hand",
-	"description": "This plugin allows you to generate valid numbers that can identify people, companies, etc.",
+	"name": "__MSG_pluginname__",
+	"description": "__MSG_plugindescription__",
 	"version": "1.0",
+	"default_locale": "en",
 
 	"browser_action": {
 		"default_icon": {
@@ -12,7 +13,7 @@
 			"128": "Icon-128.png"
 		},
 		"default_popup": "popup.html",
-		"default_title": "Choose the number type for which to put a valid sample on your clipboard"
+		"default_title": "__MSG_pluginhovertext__"
 	},
 	"permissions": [],
 	"icons": {
