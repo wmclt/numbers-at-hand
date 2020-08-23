@@ -71,9 +71,6 @@ function getRandomRrnNumber() {
 
 //https://www.iban.com/calculate-iban https://nl.wikipedia.org/wiki/International_Bank_Account_Number
 function getRandomIban() {
-
-
-
 	var country = "BE";
 	var bankcode = randomIntFromInterval(0,999); //https://www.nbb.be/en/payments-and-securities/payment-standards/bank-identification-codes
 	var accountNbr = randomIntFromInterval(0,9999999);
@@ -95,7 +92,7 @@ function resetStatus(text) {
 
 function setStatus(text) {
   var stat = document.getElementById('status');
-	stat.innerHTML = text +' copied to clipboard';
+	stat.innerHTML = text + ' copied to clipboard';
 	stat.classList.add("list-group-item-success");
 	stat.classList.remove("list-group-item-secondary");
 }
