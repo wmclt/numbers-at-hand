@@ -9,7 +9,7 @@
 		"message": "Numbers at hand"
 	},
 	"uuid": {
-		"message": "UUID"
+		"message": "Nil UUID"
 	},
 	"nationalIdentificationNumber": {
 		"message": "🇧🇪 National identification number"
@@ -34,5 +34,8 @@
             "example": "1234567890"
           }
         }
+	},
+	"currentDatetime": {
+		"message": "Current UTC Datetime"
 	}
 }

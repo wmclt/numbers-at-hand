@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-  setupGeneratingButton("btn-uuid","uuid",function() { getRandomUuid(); }  );
   setupGeneratingButton("btn-rrn","nationalIdentificationNumber",function() { getRandomRrnNumber(); } );
   setupGeneratingButton("btn-companynbr","companyNumber",function() { getRandomCompanyNumber(); } );
   setupGeneratingButton("btn-rsznbr","rszNumber",function() { getRandomRszNumber(); } );
   setupGeneratingButton("btn-iban","iban",function() { getRandomIban(); } );
+
+  setupGeneratingButton("btn-uuid","uuid",function() { getNilUuid(); }  );
+  setupGeneratingButton("btn-datetime","currentDatetime",function() { getCurrentUtcDatetime(); }  );
 
   initUiValue("status", "defaultStatus");
   initUiValue("title", "pluginname");
@@ -26,7 +28,7 @@ function initUiValue(elementId, messageId) {
 }
 
 //https://www.uuidgenerator.net/
-function getRandomUuid() {
+function getNilUuid() {
 	var uuid = "00000000-0000-0000-0000-000000000000"
 	copy(uuid);
 	setStatus(uuid);
@@ -78,6 +80,12 @@ function getRandomIban() {
 
 	copy(iban);
 	setStatus(iban);
+}
+function getCurrentUtcDatetime() {
+	var datetime = new Date().toISOString();
+
+	copy(datetime);
+	setStatus(datetime);
 }
 
 function resetStatus(text) {
