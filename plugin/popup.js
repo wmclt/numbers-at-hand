@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
   ibanBtn.addEventListener('click', function() { getRandomIban(); }, false);
   ibanBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
 
-	
+
   var stat = document.getElementById('status');
   var title = document.getElementById('title');
 
@@ -72,11 +72,13 @@ function getRandomRrnNumber() {
 //https://www.iban.com/calculate-iban https://nl.wikipedia.org/wiki/International_Bank_Account_Number
 function getRandomIban() {
 
+
+
 	var country = "BE";
 	var bankcode = randomIntFromInterval(0,999); //https://www.nbb.be/en/payments-and-securities/payment-standards/bank-identification-codes
 	var accountNbr = randomIntFromInterval(0,9999999);
 
-    var nationalCheck = (10000000*bankcode + accountNbr)%97==0 ? 97 : (10000000*bankcode + accountNbr)%97;
+  var nationalCheck = (10000000*bankcode + accountNbr)%97==0 ? 97 : (10000000*bankcode + accountNbr)%97;
 	var checksum = 98 - modulo(''+(1000000000000000*bankcode + 100000000*accountNbr + nationalCheck*1000000 + 111400), ''+97);
 	var iban = country.concat(''.concat(1000000000000*checksum + 1000000000*bankcode + 100*accountNbr + nationalCheck).padStart(14,"0"));
 
@@ -85,14 +87,14 @@ function getRandomIban() {
 }
 
 function resetStatus(text) {
-    var stat = document.getElementById('status');
+  var stat = document.getElementById('status');
 	stat.innerHTML = 'Click a number-type to generate it';
 	stat.classList.add("list-group-item-secondary");
 	stat.classList.remove("list-group-item-success");
 }
 
 function setStatus(text) {
-    var stat = document.getElementById('status');
+  var stat = document.getElementById('status');
 	stat.innerHTML = text +' copied to clipboard';
 	stat.classList.add("list-group-item-success");
 	stat.classList.remove("list-group-item-secondary");
@@ -103,37 +105,36 @@ function randomIntFromInterval(min, max) { // min and max included
 }
 
 function copy(text) {
-    var input = document.createElement('input');
-    input.setAttribute('value', text);
-    document.body.appendChild(input);
-    input.select();
-    var result = document.execCommand('copy');
-    document.body.removeChild(input);
-    return result;
+  var input = document.createElement('input');
+  input.setAttribute('value', text);
+  document.body.appendChild(input);
+  input.select();
+  var result = document.execCommand('copy');
+  document.body.removeChild(input);
+  return result;
 }
 
 function modulo (divident, divisor) {
-    var cDivident = '';
-    var cRest = '';
+  var cDivident = '';
+  var cRest = '';
 
-    for (var i in divident ) {
-        var cChar = divident[i];
-        var cOperator = cRest + '' + cDivident + '' + cChar;
+  for (var i in divident ) {
+    var cChar = divident[i];
+    var cOperator = cRest + '' + cDivident + '' + cChar;
 
-        if ( cOperator < parseInt(divisor) ) {
-                cDivident += '' + cChar;
-        } else {
-                cRest = cOperator % divisor;
-                if ( cRest == 0 ) {
-                    cRest = '';
-                }
-                cDivident = '';
-        }
-
+    if ( cOperator < parseInt(divisor) ) {
+            cDivident += '' + cChar;
+    } else {
+            cRest = cOperator % divisor;
+            if ( cRest == 0 ) {
+                cRest = '';
+            }
+            cDivident = '';
     }
-    cRest += '' + cDivident;
-    if (cRest == '') {
-        cRest = 0;
-    }
-    return cRest;
+  }
+  cRest += '' + cDivident;
+  if (cRest == '') {
+      cRest = 0;
+  }
+  return cRest;
 }
