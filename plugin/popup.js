@@ -1,16 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
   var uuidBtn = document.getElementById('btn-uuid');
-  uuidBtn.addEventListener('click', function() { getRandomUuid(); }, false);
-	
   var rrnBtn = document.getElementById('btn-rrn');
-  rrnBtn.addEventListener('click', function() { getRandomRrnNumber(); }, false);
-	
   var companyBtn = document.getElementById('btn-companynbr');
-  companyBtn.addEventListener('click', function() { getRandomCompanyNumber(); }, false);
-	
   var rszBtn = document.getElementById('btn-rsznbr');
+  
+  uuidBtn.addEventListener('click', function() { getRandomUuid(); }, false);
+  rrnBtn.addEventListener('click', function() { getRandomRrnNumber(); }, false);
+  companyBtn.addEventListener('click', function() { getRandomCompanyNumber(); }, false);
   rszBtn.addEventListener('click', function() { getRandomRszNumber(); }, false);
 	
+  var title = document.getElementById('title');
+  
+  uuidBtn.innerHTML = chrome.i18n.getMessage("uuid");
+  rrnBtn.innerHTML = chrome.i18n.getMessage("nationalIdentificationNumber");
+  companyBtn.innerHTML = chrome.i18n.getMessage("companyNumber");
+  rszBtn.innerHTML = chrome.i18n.getMessage("rszNumber");
+  title.innerHTML = chrome.i18n.getMessage("pluginname");
 }, false);
 
 //https://www.uuidgenerator.net/
@@ -19,7 +24,7 @@ function getRandomUuid() {
 	copy(uuid);
 	setStatus(uuid);
 }
-//RSZ-nummer https://nl.wikipedia.org/wiki/RSZ-nummer
+//https://nl.wikipedia.org/wiki/RSZ-nummer
 function getRandomRszNumber() {
 	base = randomIntFromInterval(1000,1999999); 
 	control = 96- (100*base)%97;
@@ -29,7 +34,7 @@ function getRandomRszNumber() {
 	setStatus(rsznbr);
 }
 
-//Ondernemingsnummer https://nl.wikipedia.org/wiki/Kruispuntbank_van_Ondernemingen
+//https://nl.wikipedia.org/wiki/Kruispuntbank_van_Ondernemingen
 function getRandomCompanyNumber() {
 	base = randomIntFromInterval(2000000,19999999); 
 	control = 97 - base % 97;
@@ -39,7 +44,7 @@ function getRandomCompanyNumber() {
 	setStatus(companynbr);
 }
 
-//Rijksregisternummer https://nl.wikipedia.org/wiki/Rijksregisternummer
+//https://nl.wikipedia.org/wiki/Rijksregisternummer
 function getRandomRrnNumber() {
 	year = randomIntFromInterval(1920,2019);
 	month = randomIntFromInterval(1,12);
