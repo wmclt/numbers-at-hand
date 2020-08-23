@@ -1,32 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var uuidBtn = document.getElementById('btn-uuid');
-  var rrnBtn = document.getElementById('btn-rrn');
-  var companyBtn = document.getElementById('btn-companynbr');
-  var rszBtn = document.getElementById('btn-rsznbr');
-  var ibanBtn = document.getElementById('btn-iban');
+  setupGeneratingButton("btn-uuid","uuid",function() { getRandomUuid(); }  );
+  setupGeneratingButton("btn-rrn","nationalIdentificationNumber",function() { getRandomRrnNumber(); } );
+  setupGeneratingButton("btn-companynbr","companyNumber",function() { getRandomCompanyNumber(); } );
+  setupGeneratingButton("btn-rsznbr","rszNumber",function() { getRandomRszNumber(); } );
+  setupGeneratingButton("btn-iban","iban",function() { getRandomIban(); } );
 
-  uuidBtn.addEventListener('click', function() { getRandomUuid(); }, false);
-  uuidBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
-  rrnBtn.addEventListener('click', function() { getRandomRrnNumber(); }, false);
-  rrnBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
-  companyBtn.addEventListener('click', function() { getRandomCompanyNumber(); }, false);
-  companyBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
-  rszBtn.addEventListener('click', function() { getRandomRszNumber(); }, false);
-  rszBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
-  ibanBtn.addEventListener('click', function() { getRandomIban(); }, false);
-  ibanBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
-
-
-  var stat = document.getElementById('status');
-  var title = document.getElementById('title');
-
-  uuidBtn.innerHTML = chrome.i18n.getMessage("uuid");
-  rrnBtn.innerHTML = chrome.i18n.getMessage("nationalIdentificationNumber");
-  companyBtn.innerHTML = chrome.i18n.getMessage("companyNumber");
-  rszBtn.innerHTML = chrome.i18n.getMessage("rszNumber");
-  ibanBtn.innerHTML = chrome.i18n.getMessage("iban");
-  title.innerHTML = chrome.i18n.getMessage("pluginname");
+  initUiValue("status", "defaultStatus");
+  initUiValue("title", "pluginname");
 }, false);
+
+function setupGeneratingButton(elementId, messageId, func) {
+  var btn = document.getElementById(elementId);
+  btn.addEventListener('click', func , false);
+  btn.addEventListener('mouseout', function() { resetStatus(); }, false);
+  initUiValue(elementId, messageId);
+}
+
+function initUiValue(elementId, messageId) {
+  try {
+  document.getElementById(elementId).innerHTML = chrome.i18n.getMessage(messageId);
+  }
+  catch(err) {
+    ; //[Uncaught TypeError: Cannot read property 'getMessage' of undefined] if webpage loaded directly
+  }
+}
 
 //https://www.uuidgenerator.net/
 function getRandomUuid() {

@@ -7,20 +7,23 @@
 	},
 	"pluginhovertext": {
 		"message": "Numbers at hand"
-	},	
+	},
 	"uuid": {
 		"message": "UUID"
-	},	
+	},
 	"nationalIdentificationNumber": {
 		"message": "🇧🇪 National identification number"
 	},	
 	"companyNumber": {
 		"message": "🇧🇪 Company number"
-	},	
+	},
 	"rszNumber": {
 		"message": "🇧🇪 RSZ number"
-	},	
+	},
 	"iban": {
 		"message": "🇧🇪 IBAN"
+	},
+	"defaultStatus": {
+		"message": "Click a number-type to generate it"
 	}
 }
