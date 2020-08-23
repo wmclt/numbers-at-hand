@@ -6,12 +6,18 @@ document.addEventListener('DOMContentLoaded', function() {
   var ibanBtn = document.getElementById('btn-iban');
   
   uuidBtn.addEventListener('click', function() { getRandomUuid(); }, false);
+  uuidBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
   rrnBtn.addEventListener('click', function() { getRandomRrnNumber(); }, false);
+  rrnBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
   companyBtn.addEventListener('click', function() { getRandomCompanyNumber(); }, false);
+  companyBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
   rszBtn.addEventListener('click', function() { getRandomRszNumber(); }, false);
+  rszBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
   ibanBtn.addEventListener('click', function() { getRandomIban(); }, false);
+  ibanBtn.addEventListener('mouseout', function() { resetStatus(); }, false);
 	
 	
+  var stat = document.getElementById('status');
   var title = document.getElementById('title');
   
   uuidBtn.innerHTML = chrome.i18n.getMessage("uuid");
@@ -83,8 +89,18 @@ function getRandomIban() {
 //https://en.wikipedia.org/wiki/Vehicle_identification_number
 
 
+function resetStatus(text) {
+    var stat = document.getElementById('status');
+	stat.innerHTML = 'Click a number-type to generate it';
+	stat.classList.add("list-group-item-secondary");
+	stat.classList.remove("list-group-item-success");
+}
+
 function setStatus(text) {
-    document.getElementById('status').innerHTML = text;
+    var stat = document.getElementById('status');
+	stat.innerHTML = text +' copied to clipboard';
+	stat.classList.add("list-group-item-success");
+	stat.classList.remove("list-group-item-secondary");
 }
 
 function randomIntFromInterval(min, max) { // min and max included 
