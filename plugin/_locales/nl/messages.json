@@ -1,11 +1,26 @@
 {
+	"pluginname": {
+		"message": "Numbers at hand"
+	},
+	"plugindescription": {
+		"message": "Met deze plugin kan je geldige nummers genereren voor de identificatie van personen, bedrijven etc."
+	},
+	"pluginhovertext": {
+		"message": "Numbers at hand"
+	},	
+	"uuid": {
+		"message": "UUID"
+	},	
 	"nationalIdentificationNumber": {
-		"message": "Rijksregisternummer"
+		"message": "🇧🇪 Rijksregisternummer"
 	},	
 	"companyNumber": {
-		"message": "Ondernemingsnummer"
+		"message": "🇧🇪 Ondernemingsnummer"
 	},	
 	"rszNumber": {
-		"message": "RSZ-nummer"
-	}	
+		"message": "🇧🇪 RSZ-nummer"
+	},	
+	"iban": {
+		"message": "🇧🇪 IBAN"
+	},
 }
