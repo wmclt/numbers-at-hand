@@ -89,15 +89,7 @@ function getCurrentUtcDatetime() {
 }
 
 function resetStatus(text) {
-  try {
-    var str = chrome.i18n.getMessage("defaultStatus");
-  }
-  catch(err) {
-    var str = 'Click a number-type to generate it';
-  }
-
   var stat = document.getElementById('status');
-	stat.innerHTML = str;
 	stat.classList.add("list-group-item-secondary");
 	stat.classList.remove("list-group-item-success");
 }
