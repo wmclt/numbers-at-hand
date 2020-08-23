@@ -12,12 +12,15 @@
 		"message": "UUID"
 	},	
 	"nationalIdentificationNumber": {
-		"message": "National identification number"
+		"message": "🇧🇪 National identification number"
 	},	
 	"companyNumber": {
-		"message": "Company number"
+		"message": "🇧🇪 Company number"
 	},	
 	"rszNumber": {
-		"message": "RSZ number"
-	}	
+		"message": "🇧🇪 RSZ number"
+	},	
+	"iban": {
+		"message": "🇧🇪 IBAN"
+	},
 }
