@@ -6,7 +6,7 @@
 		"message": "This plugin allows you to generate valid numbers that can identify people, companies, etc."
 	},
 	"pluginhovertext": {
-		"message": "Choose the number type for which to put a valid sample on your clipboard"
+		"message": "Numbers at hand"
 	},	
 	"uuid": {
 		"message": "UUID"
