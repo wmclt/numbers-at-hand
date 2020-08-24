@@ -1,11 +1,11 @@
 {
-	"pluginname": {
+	"extensionname": {
 		"message": "Numbers at hand"
 	},
-	"plugindescription": {
-		"message": "Met deze plugin kan je geldige nummers genereren voor de identificatie van personen, bedrijven etc."
+	"extensiondescription": {
+		"message": "Met deze extensie kan je geldige nummers genereren voor de identificatie van personen, bedrijven etc."
 	},
-	"pluginhovertext": {
+	"extensionhovertext": {
 		"message": "Numbers at hand"
 	},
 	"uuid": {
@@ -44,5 +44,8 @@
 	},
 	"establishmentUnitNumber": {
 		"message": "🇧🇪 Vestigingseenheidsnummer"
+	},
+	"numberPlate": {
+		"message": "🇧🇪 Nummerplaat"
 	}
 }

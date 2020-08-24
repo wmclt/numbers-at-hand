@@ -1,12 +1,13 @@
 # Numbers at hand
-A Chrome-plugin that allows you to generate valid numbers that can identify people, companies, etc.
+A Chrome extension that allows you to generate valid numbers that can identify people, companies, etc.
 
 ## Functionality
 Generate valid Belgian numbers for these types:
 * National Identification Number (Rijksregisternummer / Numéro du Registre national / Nationalversicherungsnummer)
 * Company number (Ondernemingsnummer / Numéro d'entreprise / Unternehmensnummer)
-* Establishment Unit number (Vestigingseenheidsnummer / Numéro d’unité d’établissement / Niederlassungseinheitsnummer)
+* Establishment unit number (Vestigingseenheidsnummer / Numéro d’unité d’établissement / Niederlassungseinheitsnummer)
 * NSSO number (RSZ-nummer / Numéro ONSS / LSS-Nummer)
+* Number plate (Nummerplaat / Plaque d'immatriculation / Kfz-Kennzeichen)
 * IBAN
 
 Generate other useful strings:
@@ -20,8 +21,8 @@ Suggested use case: generate randomized test-data that passes validation checks
 ## How to use
 
 Some options:
-* Install the plugin from the Chrome web store
-* Run the popup.html in your browser
+* Install the extension from the [Chrome web store](https://chrome.google.com/webstore/detail/numbers-at-hand/jncgcehddiijpaiopleohniplpafmmio)
+* Run the popup.html directly in your browser (only supports English)
 
 ## Similar tools
 

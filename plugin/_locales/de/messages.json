@@ -1,11 +1,11 @@
 {
-	"pluginname": {
+	"extensionname": {
 		"message": "Numbers at hand"
 	},
-	"plugindescription": {
-		"message": "Mit diesem Plugin können Sie gültige Nummern generieren, mit denen Personen, Unternehmen usw. identifiziert werden können."
+	"extensiondescription": {
+		"message": "Mit diesem Erweiterung können Sie gültige Nummern generieren, mit denen Personen, Unternehmen usw. identifiziert werden können."
 	},
-	"pluginhovertext": {
+	"extensionhovertext": {
 		"message": "Numbers at hand"
 	},
 	"uuid": {
@@ -44,5 +44,8 @@
 	},
 	"establishmentUnitNumber": {
 		"message": "🇧🇪 Niederlassungseinheitsnummer"
+	},
+	"numberPlate": {
+		"message": "🇧🇪 Kfz-Kennzeichen"
 	}
 }
