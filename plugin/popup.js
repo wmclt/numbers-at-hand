@@ -1,30 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
-  setupGeneratingButton("btn-rrn","nationalIdentificationNumber",function() { getRandomRrnNumber(); } );
-  setupGeneratingButton("btn-companynbr","companyNumber",function() { getRandomCompanyNumber(); } );
-  setupGeneratingButton("btn-nssonbr","nssoNumber",function() { getRandomNssoNumber(); } );
-  setupGeneratingButton("btn-iban","iban",function() { getRandomIban(); } );
+  setupGeneratingButton("a-rrn","nationalIdentificationNumber",function() { getRandomRrnNumber(); } );
+  setupGeneratingButton("a-company","companyNumber",function() { getRandomCompanyNumber(); } );
+  setupGeneratingButton("a-establishmentunit","establishmentUnitNumber",function() { getRandomEstablishmentUnitNumber(); } );
+  setupGeneratingButton("a-nsso","nssoNumber",function() { getRandomNssoNumber(); } );
+  setupGeneratingButton("a-iban","iban",function() { getRandomIban(); } );
 
-  setupGeneratingButton("btn-uuid","uuid",function() { getNilUuid(); }  );
-  setupGeneratingButton("btn-datetime","currentDatetime",function() { getCurrentUtcDatetime(); }  );
+  setupGeneratingButton("a-uuid","uuid",function() { getNilUuid(); }  );
+  setupGeneratingButton("a-datetime","currentDatetime",function() { getCurrentUtcDatetime(); }  );
 
   initUiValue("status", "defaultStatus");
   initUiValue("title", "pluginname");
 }, false);
 
-function setupGeneratingButton(elementId, messageId, func) {
-  var btn = document.getElementById(elementId);
-  btn.addEventListener('click', func , false);
-  btn.addEventListener('mouseout', function() { resetStatus(); }, false);
-  initUiValue(elementId, messageId);
-}
+// **************************** Core functionality *****************************
 
-function initUiValue(elementId, messageId) {
-  try {
-    document.getElementById(elementId).innerHTML = chrome.i18n.getMessage(messageId);
-  }
-  catch(err) {
-    ; //[Uncaught TypeError: Cannot read property 'getMessage' of undefined] if webpage loaded directly
-  }
+function getRandomEstablishmentUnitNumber() {
+	var firstDigit = randomIntFromInterval(2,8);
+	var nextDigits = randomIntFromInterval(0,9999999);
+
+	var base = (firstDigit*10000000) + nextDigits;
+	var checksum = (97 - base % 97);
+	var establishmentUnitNumber = ''.concat( 100 * base + checksum);
+
+	copy(establishmentUnitNumber);
+	setStatus(establishmentUnitNumber);
 }
 
 function getNilUuid() {
@@ -77,12 +76,15 @@ function getRandomIban() {
 	copy(iban);
 	setStatus(iban);
 }
+
 function getCurrentUtcDatetime() {
 	var datetime = new Date().toISOString();
 
 	copy(datetime);
 	setStatus(datetime);
 }
+
+// **************************** Status functions ******************************
 
 function resetStatus(text) {
   var stat = document.getElementById('status');
@@ -103,6 +105,26 @@ function setStatus(text) {
 	stat.classList.add("list-group-item-success");
 	stat.classList.remove("list-group-item-secondary");
 }
+
+// **************************** Setup functions ******************************
+
+function setupGeneratingButton(elementId, messageId, func) {
+  var btn = document.getElementById(elementId);
+  btn.addEventListener('click', func , false);
+  btn.addEventListener('mouseout', function() { resetStatus(); }, false);
+  initUiValue(elementId, messageId);
+}
+
+function initUiValue(elementId, messageId) {
+  try {
+    document.getElementById(elementId).innerHTML = chrome.i18n.getMessage(messageId);
+  }
+  catch(err) {
+    ; //[Uncaught TypeError: Cannot read property 'getMessage' of undefined] if webpage loaded directly
+  }
+}
+
+// **************************** Helper functions ******************************
 
 function randomIntFromInterval(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);

@@ -3,9 +3,10 @@ A Chrome-plugin that allows you to generate valid numbers that can identify peop
 
 ## Functionality
 Generate valid Belgian numbers for these types:
-* National Identification Number (Rijksregisternummer)
-* Company number (Ondernemingsnummer)
-* NSSO number (RSZ-nummer)
+* National Identification Number (Rijksregisternummer / Numéro du Registre national / Nationalversicherungsnummer)
+* Company number (Ondernemingsnummer / Numéro d'entreprise / Unternehmensnummer)
+* Establishment Unit number (Vestigingseenheidsnummer / Numéro d’unité d’établissement / Niederlassungseinheitsnummer)
+* NSSO number (RSZ-nummer / Numéro ONSS / LSS-Nummer)
 * IBAN
 
 Generate other useful strings:

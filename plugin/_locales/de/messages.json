@@ -41,5 +41,8 @@
 	},
 	"currentDatetime": {
 		"message": "Aktuelle UTC-Datumszeit"
+	},
+	"establishmentUnitNumber": {
+		"message": "🇧🇪 Niederlassungseinheitsnummer"
 	}
 }
