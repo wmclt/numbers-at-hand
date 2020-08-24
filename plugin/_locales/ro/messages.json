@@ -1,0 +1,45 @@
+{
+	"pluginname": {
+		"message": "Numbers at hand"
+	},
+	"plugindescription": {
+		"message": "Acest plugin vă permite să generați numere valide care pot identifica persoane, companii etc."
+	},
+	"pluginhovertext": {
+		"message": "Numbers at hand"
+	},
+	"uuid": {
+		"message": "UUID gol"
+	},
+	"nationalIdentificationNumber": {
+		"message": "🇧🇪 Cod Numeric Personal",
+		"description":"Număr de identificare la www.ibz.rrn.fgov.be"
+	},
+	"companyNumber": {
+		"message": "🇧🇪 Numărul de întreprindere",
+		"description":"Număr de identificare la kbopub.economie.fgov.be"
+	},
+	"nssoNumber": {
+		"message": "🇧🇪 Numărul de ONSS",
+		"description":"Număr de identificare la Oficiul Național de Securitate Socială. www.rsz.fgov.be"
+	},
+	"iban": {
+		"message": "🇧🇪 IBAN",
+		"description": "International Bank Account Number"
+	},
+	"defaultStatus": {
+		"message": "Faceți clic pe un tip de număr pentru a-l genera"
+	},
+	"copiedToClipboard": {
+		"message": "$value$ copiată în clipboard",
+		"placeholders": {
+          "value": {
+            "content": "$1",
+            "example": "1234567890"
+          }
+        }
+	},
+	"currentDatetime": {
+		"message": "Data curentă UTC"
+	}
+}

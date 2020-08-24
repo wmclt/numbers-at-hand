@@ -12,7 +12,8 @@
 		"message": "Nil UUID"
 	},
 	"nationalIdentificationNumber": {
-		"message": "🇧🇪 National identification number"
+		"message": "🇧🇪 National identification number",
+		"description":"Identifying number at www.ibz.rrn.fgov.be"
 	},
 	"companyNumber": {
 		"message": "🇧🇪 Enterprise number",
