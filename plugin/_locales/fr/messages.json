@@ -24,7 +24,8 @@
 		"description":"Numéro d’identification à Office National de Sécurité Sociale. www.rsz.fgov.be"
 	},
 	"iban": {
-		"message": "🇧🇪 IBAN"
+		"message": "🇧🇪 IBAN",
+		"description": "International Bank Account Number"
 	},
 	"defaultStatus": {
 		"message": "Cliquez sur un type de numéro pour le générer"

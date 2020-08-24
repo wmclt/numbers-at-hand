@@ -24,7 +24,8 @@
 		"description":"Identifying number at National Social Security Office. www.rsz.fgov.be"
 	},
 	"iban": {
-		"message": "🇧🇪 IBAN"
+		"message": "🇧🇪 IBAN",
+		"description": "International Bank Account Number"
 	},
 	"defaultStatus": {
 		"message": "Click a number-type to generate it"

@@ -3,34 +3,35 @@
 		"message": "Numbers at hand"
 	},
 	"plugindescription": {
-		"message": "This plugin allows you to generate valid numbers that can identify people, companies, etc."
+		"message": "Mit diesem Plugin können Sie gültige Nummern generieren, mit denen Personen, Unternehmen usw. identifiziert werden können."
 	},
 	"pluginhovertext": {
 		"message": "Numbers at hand"
 	},
 	"uuid": {
-		"message": "Nil UUID"
+		"message": "Leere UUID"
 	},
 	"nationalIdentificationNumber": {
-		"message": "🇧🇪 National identification number",
-		"description":"Identifying number at www.ibz.rrn.fgov.be"
+		"message": "🇧🇪 Nationalversicherungsnummer",
+		"description":"Identifikationsnummer bei Nationalregister. www.ibz.rrn.fgov.be"
 	},
 	"companyNumber": {
-		"message": "🇧🇪 Enterprise number",
-		"description":"Identifying number at Crossroads Bank for Enterprises. kbopub.economie.fgov.be"
+		"message": "🇧🇪 Unternehmensnummer",
+		"description":"Identifikationsnummer bei Zentrale Datenbank der Unternehmen. kbopub.economie.fgov.be"
 	},
 	"nssoNumber": {
-		"message": "🇧🇪 NSSO number",
-		"description":"Identifying number at National Social Security Office. www.rsz.fgov.be"
+		"message": "🇧🇪 LSS-Nummer",
+		"description":"Identifikationsnummer bei Landesamt für Soziale Sicherheit. www.rsz.fgov.be"
 	},
 	"iban": {
-		"message": "🇧🇪 IBAN"
+		"message": "🇧🇪 IBAN",
+		"description": "International Bank Account Number"
 	},
 	"defaultStatus": {
-		"message": "Click a number-type to generate it"
+		"message": "Klicken Sie auf einen Zahlentyp, um ihn zu generieren"
 	},
 	"copiedToClipboard": {
-		"message": "$value$ copied to clipboard",
+		"message": "$value$ in die Zwischenablage kopiert",
 		"placeholders": {
           "value": {
             "content": "$1",
@@ -39,6 +40,6 @@
         }
 	},
 	"currentDatetime": {
-		"message": "Current UTC Datetime"
+		"message": "Aktuelle UTC-Datumszeit"
 	}
 }
