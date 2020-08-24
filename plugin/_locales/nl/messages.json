@@ -47,5 +47,17 @@
 	},
 	"numberPlate": {
 		"message": "🇧🇪 Nummerplaat"
+	},
+	"sectionPeople": {
+		"message": "Personen"
+	},
+	"sectionCompanies": {
+		"message": "Bedrijven"
+	},
+	"sectionOthers": {
+		"message": "Andere"
+	},
+	"sectionUtilities": {
+		"message": "Utilities"
 	}
 }

@@ -47,5 +47,17 @@
 	},
 	"numberPlate": {
 		"message": "🇧🇪 Plaque d'immatriculation"
+	},
+	"sectionPeople": {
+		"message": "Personnes"
+	},
+	"sectionCompanies": {
+		"message": "Entreprises"
+	},
+	"sectionOthers": {
+		"message": "Autres"
+	},
+	"sectionUtilities": {
+		"message": "Utilitaires"
 	}
 }

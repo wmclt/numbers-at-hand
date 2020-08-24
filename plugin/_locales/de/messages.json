@@ -47,5 +47,17 @@
 	},
 	"numberPlate": {
 		"message": "🇧🇪 Kfz-Kennzeichen"
+	},
+	"sectionPeople": {
+		"message": "Personen"
+	},
+	"sectionCompanies": {
+		"message": "Unternehmen"
+	},
+	"sectionOthers": {
+		"message": "Andere"
+	},
+	"sectionUtilities": {
+		"message": "Utilities"
 	}
 }

@@ -47,5 +47,17 @@
 	},
 	"numberPlate": {
 		"message": "🇧🇪 Number plate"
+	},
+	"sectionPeople": {
+		"message": "People"
+	},
+	"sectionCompanies": {
+		"message": "Companies"
+	},
+	"sectionOthers": {
+		"message": "Others"
+	},
+	"sectionUtilities": {
+		"message": "Utilities"
 	}
 }

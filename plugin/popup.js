@@ -9,8 +9,13 @@ document.addEventListener('DOMContentLoaded', function() {
   setupGeneratingButton("a-uuid","uuid",function() { getNilUuid(); }  );
   setupGeneratingButton("a-datetime","currentDatetime",function() { getCurrentUtcDatetime(); }  );
 
-  initUiValue("status", "defaultStatus");
   initUiValue("title", "extensionname");
+  initUiValue("div-status", "defaultStatus");
+  initUiValue("div-people", "sectionPeople");
+  initUiValue("div-companies", "sectionCompanies");
+  initUiValue("div-others", "sectionOthers");
+  initUiValue("div-utilities", "sectionUtilities");
+
 }, false);
 
 // **************************** Core functionality *****************************
@@ -100,20 +105,21 @@ function getCurrentUtcDatetime() {
 // **************************** Status functions ******************************
 
 function resetStatus(text) {
-  var stat = document.getElementById('status');
+  var stat = document.getElementById('div-status');
 	stat.classList.add("list-group-item-secondary");
 	stat.classList.remove("list-group-item-success");
 }
 
 function setStatus(text) {
+  var str = "";
   try {
-    var str = chrome.i18n.getMessage("copiedToClipboard",[text]);
+    str = chrome.i18n.getMessage("copiedToClipboard",[text]);
   }
   catch(err) {
-    var str = text + ' copied to clipboard';
+    str = text + ' copied to clipboard';
   }
 
-  var stat = document.getElementById('status');
+  var stat = document.getElementById('div-status');
 	stat.innerHTML = str;
 	stat.classList.add("list-group-item-success");
 	stat.classList.remove("list-group-item-secondary");

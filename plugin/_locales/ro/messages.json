@@ -47,5 +47,17 @@
 	},
 	"numberPlate": {
 		"message": "🇧🇪 Număr de înmatriculare auto"
+	},
+	"sectionPeople": {
+		"message": "Oameni"
+	},
+	"sectionCompanies": {
+		"message": "Intreprindere"
+	},
+	"sectionOthers": {
+		"message": "Alții"
+	},
+	"sectionUtilities": {
+		"message": "Utilități"
 	}
 }
