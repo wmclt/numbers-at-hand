@@ -41,5 +41,8 @@
 	},
 	"currentDatetime": {
 		"message": "Current UTC Datetime"
+	},
+	"establishmentUnitNumber": {
+		"message": "🇧🇪 Establishment unit number"
 	}
 }

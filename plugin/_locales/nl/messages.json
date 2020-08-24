@@ -41,5 +41,8 @@
 	},
 	"currentDatetime": {
 		"message": "Actueel UTC tijdstip"
+	},
+	"establishmentUnitNumber": {
+		"message": "🇧🇪 Vestigingseenheidsnummer"
 	}
 }

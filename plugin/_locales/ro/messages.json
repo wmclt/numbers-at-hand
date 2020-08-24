@@ -41,5 +41,8 @@
 	},
 	"currentDatetime": {
 		"message": "Data curentă UTC"
+	},
+	"establishmentUnitNumber": {
+		"message": "🇧🇪 Numărul unității de înființare"
 	}
 }
