@@ -1,11 +1,11 @@
 {
-	"pluginname": {
+	"extensionname": {
 		"message": "Numbers at hand"
 	},
-	"plugindescription": {
-		"message": "Acest plugin vă permite să generați numere valide care pot identifica persoane, companii etc."
+	"extensiondescription": {
+		"message": "Acest extensie vă permite să generați numere valide care pot identifica persoane, companii etc."
 	},
-	"pluginhovertext": {
+	"extensionhovertext": {
 		"message": "Numbers at hand"
 	},
 	"uuid": {
@@ -44,5 +44,8 @@
 	},
 	"establishmentUnitNumber": {
 		"message": "🇧🇪 Numărul unității de înființare"
+	},
+	"numberPlate": {
+		"message": "🇧🇪 Număr de înmatriculare auto"
 	}
 }

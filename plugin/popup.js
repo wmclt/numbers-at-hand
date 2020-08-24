@@ -4,16 +4,29 @@ document.addEventListener('DOMContentLoaded', function() {
   setupGeneratingButton("a-establishmentunit","establishmentUnitNumber",function() { getRandomEstablishmentUnitNumber(); } );
   setupGeneratingButton("a-nsso","nssoNumber",function() { getRandomNssoNumber(); } );
   setupGeneratingButton("a-iban","iban",function() { getRandomIban(); } );
+  setupGeneratingButton("a-numberplate","numberPlate",function() { getRandomNumberPlate(); } );
 
   setupGeneratingButton("a-uuid","uuid",function() { getNilUuid(); }  );
   setupGeneratingButton("a-datetime","currentDatetime",function() { getCurrentUtcDatetime(); }  );
 
   initUiValue("status", "defaultStatus");
-  initUiValue("title", "pluginname");
+  initUiValue("title", "extensionname");
 }, false);
 
 // **************************** Core functionality *****************************
 
+function getRandomNumberPlate() {
+	var firstDigit = randomIntFromInterval(1,7);
+  var firstChar = String.fromCharCode(randomIntFromInterval(65,90));
+  var secondChar = String.fromCharCode(randomIntFromInterval(65,90));
+  var thirdChar = String.fromCharCode(randomIntFromInterval(65,90));
+	var nextDigits = randomIntFromInterval(0,999);
+
+	var numberPlate = ''.concat( firstDigit).concat( firstChar).concat( secondChar).concat( thirdChar).concat( ''.concat(nextDigits).padStart(3, "0"));
+
+	copy(numberPlate);
+	setStatus(numberPlate);
+}
 function getRandomEstablishmentUnitNumber() {
 	var firstDigit = randomIntFromInterval(2,8);
 	var nextDigits = randomIntFromInterval(0,9999999);

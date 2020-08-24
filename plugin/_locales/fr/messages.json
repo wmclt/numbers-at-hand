@@ -1,11 +1,11 @@
 {
-	"pluginname": {
+	"extensionname": {
 		"message": "Numbers at hand"
 	},
-	"plugindescription": {
-		"message": "Ce plugin vous permet de générer des numéros valides qui peuvent identifier des personnes, des entreprises, etc."
+	"extensiondescription": {
+		"message": "Cette extension vous permet de générer des numéros valides qui peuvent identifier des personnes, des entreprises, etc."
 	},
-	"pluginhovertext": {
+	"extensionhovertext": {
 		"message": "Numbers at hand"
 	},
 	"uuid": {
@@ -44,5 +44,8 @@
 	},
 	"establishmentUnitNumber": {
 		"message": "🇧🇪 Numéro d’unité d’établissement"
+	},
+	"numberPlate": {
+		"message": "🇧🇪 Plaque d'immatriculation"
 	}
 }
