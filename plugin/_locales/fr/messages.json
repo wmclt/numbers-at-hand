@@ -12,7 +12,7 @@
 		"message": "UUID vide"
 	},
 	"nationalIdentificationNumber": {
-		"message": "🇧🇪 numéro du Registre national",
+		"message": "🇧🇪 Numéro du Registre national",
 		"description":"Numéro d’identification à Registre national. www.ibz.rrn.fgov.be"
 	},
 	"companyNumber": {
@@ -20,7 +20,7 @@
 		"description":"Numéro d’identification à Banque-Carrefour des Entreprises. kbopub.economie.fgov.be"
 	},
 	"nssoNumber": {
-		"message": "🇧🇪 numéro ONSS",
+		"message": "🇧🇪 Numéro ONSS",
 		"description":"Numéro d’identification à Office National de Sécurité Sociale. www.rsz.fgov.be"
 	},
 	"iban": {
