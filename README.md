@@ -3,11 +3,11 @@ A Chrome extension that allows you to generate valid numbers that can identify p
 
 ## Functionality
 Generate valid Belgian numbers for these types:
-* National Identification Number (Rijksregisternummer / Numéro du Registre national / Nationalversicherungsnummer)
-* Company number (Ondernemingsnummer / Numéro d'entreprise / Unternehmensnummer)
-* Establishment unit number (Vestigingseenheidsnummer / Numéro d’unité d’établissement / Niederlassungseinheitsnummer)
-* NSSO number (RSZ-nummer / Numéro ONSS / LSS-Nummer)
-* Number plate (Nummerplaat / Plaque d'immatriculation / Kfz-Kennzeichen)
+* National Identification Number _(Rijksregisternummer / Numéro du Registre national / Nationalversicherungsnummer)_
+* Company number _(Ondernemingsnummer / Numéro d'entreprise / Unternehmensnummer)_
+* Establishment unit number _(Vestigingseenheidsnummer / Numéro d’unité d’établissement / Niederlassungseinheitsnummer)_
+* NSSO number _(RSZ-nummer / Numéro ONSS / LSS-Nummer)_
+* Number plate _(Nummerplaat / Plaque d'immatriculation / Kfz-Kennzeichen)_
 * IBAN
 
 Generate other useful strings:
