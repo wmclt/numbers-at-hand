@@ -12,16 +12,20 @@
 		"message": "Lege UUID"
 	},
 	"nationalIdentificationNumber": {
-		"message": "🇧🇪 Rijksregisternummer"
+		"message": "🇧🇪 Rijksregisternummer",
+		"description":"Identificatienummer bij het Rijksregister. www.ibz.rrn.fgov.be"
 	},
 	"companyNumber": {
-		"message": "🇧🇪 Ondernemingsnummer"
+		"message": "🇧🇪 Ondernemingsnummer",
+		"description":"Identificatienummer bij Kruispuntbank van Ondernemingen. kbopub.economie.fgov.be"
 	},
-	"rszNumber": {
-		"message": "🇧🇪 RSZ-nummer"
+	"nssoNumber": {
+		"message": "🇧🇪 RSZ-nummer",
+		"description": "Identificatienummer bij Rijksdienst Voor Sociale Zekerheid. www.rsz.fgov.be"
 	},
 	"iban": {
-		"message": "🇧🇪 IBAN"
+		"message": "🇧🇪 IBAN",
+		"description": "International Bank Account Number"
 	},
 	"defaultStatus": {
 		"message": "Klik op een type om te genereren"

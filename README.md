@@ -5,7 +5,7 @@ A Chrome-plugin that allows you to generate valid numbers that can identify peop
 Generate valid Belgian numbers for these types:
 * National Identification Number (Rijksregisternummer)
 * Company number (Ondernemingsnummer)
-* RSZ number (RSZ-nummer)
+* NSSO number (RSZ-nummer)
 * IBAN
 
 Generate other useful strings:

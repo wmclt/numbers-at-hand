@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   setupGeneratingButton("btn-rrn","nationalIdentificationNumber",function() { getRandomRrnNumber(); } );
   setupGeneratingButton("btn-companynbr","companyNumber",function() { getRandomCompanyNumber(); } );
-  setupGeneratingButton("btn-rsznbr","rszNumber",function() { getRandomRszNumber(); } );
+  setupGeneratingButton("btn-nssonbr","nssoNumber",function() { getRandomNssoNumber(); } );
   setupGeneratingButton("btn-iban","iban",function() { getRandomIban(); } );
 
   setupGeneratingButton("btn-uuid","uuid",function() { getNilUuid(); }  );
@@ -27,23 +27,21 @@ function initUiValue(elementId, messageId) {
   }
 }
 
-//https://www.uuidgenerator.net/
 function getNilUuid() {
 	var uuid = "00000000-0000-0000-0000-000000000000"
 	copy(uuid);
 	setStatus(uuid);
 }
-//https://nl.wikipedia.org/wiki/RSZ-nummer
-function getRandomRszNumber() {
+
+function getRandomNssoNumber() {
 	var base = randomIntFromInterval(1000,1999999);
 	var control = 96- (100*base)%97;
-	var rsznbr = ''.concat( 100 * base + control).padStart(9, "0");
+	var nssonbr = ''.concat( 100 * base + control).padStart(9, "0");
 
-	copy(rsznbr);
-	setStatus(rsznbr);
+	copy(nssonbr);
+	setStatus(nssonbr);
 }
 
-//https://nl.wikipedia.org/wiki/Kruispuntbank_van_Ondernemingen
 function getRandomCompanyNumber() {
 	var base = randomIntFromInterval(2000000,19999999);
 	var control = 97 - base % 97;
@@ -53,7 +51,6 @@ function getRandomCompanyNumber() {
 	setStatus(companynbr);
 }
 
-//https://nl.wikipedia.org/wiki/Rijksregisternummer
 function getRandomRrnNumber() {
 	var year = randomIntFromInterval(1920,2019);
 	var month = randomIntFromInterval(1,12);
@@ -68,7 +65,6 @@ function getRandomRrnNumber() {
 	setStatus(rrn);
 }
 
-//https://www.iban.com/calculate-iban https://nl.wikipedia.org/wiki/International_Bank_Account_Number
 function getRandomIban() {
 	var country = "BE";
 	var bankcode = randomIntFromInterval(0,999); //https://www.nbb.be/en/payments-and-securities/payment-standards/bank-identification-codes

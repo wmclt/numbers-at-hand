@@ -15,10 +15,12 @@
 		"message": "🇧🇪 National identification number"
 	},
 	"companyNumber": {
-		"message": "🇧🇪 Company number"
+		"message": "🇧🇪 Enterprise number",
+		"description":"Identifying number at Crossroads Bank for Enterprises. kbopub.economie.fgov.be"
 	},
-	"rszNumber": {
-		"message": "🇧🇪 RSZ number"
+	"nssoNumber": {
+		"message": "🇧🇪 NSSO number",
+		"description":"Identifying number at National Social Security Office. www.rsz.fgov.be"
 	},
 	"iban": {
 		"message": "🇧🇪 IBAN"
