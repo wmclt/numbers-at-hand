@@ -16,11 +16,11 @@
 		"description":"Număr de identificare la www.ibz.rrn.fgov.be"
 	},
 	"companyNumber": {
-		"message": "🇧🇪 Numărul de întreprindere",
+		"message": "🇧🇪 Număr de întreprindere",
 		"description":"Număr de identificare la kbopub.economie.fgov.be"
 	},
 	"nssoNumber": {
-		"message": "🇧🇪 Numărul de ONSS",
+		"message": "🇧🇪 Număr de ONSS",
 		"description":"Număr de identificare la Oficiul Național de Securitate Socială. www.rsz.fgov.be"
 	},
 	"iban": {
@@ -43,7 +43,7 @@
 		"message": "Data curentă UTC"
 	},
 	"establishmentUnitNumber": {
-		"message": "🇧🇪 Numărul unității de înființare"
+		"message": "🇧🇪 Număr unității de înființare"
 	},
 	"numberPlate": {
 		"message": "🇧🇪 Număr de înmatriculare auto"
@@ -62,5 +62,8 @@
 	},
 	"settingPunctuation": {
 		"message": "Punctuaţie (. -)"
+	},
+	"vatNumber": {
+		"message": "🇧🇪 Număr de TVA"
 	}
 }

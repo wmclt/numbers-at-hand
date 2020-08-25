@@ -3,6 +3,7 @@ var storageCache = {};
 document.addEventListener('DOMContentLoaded', function() {
   setupGeneratingButton("a-rrn","nationalIdentificationNumber",function() { getRandomRrnNumber(); } );
   setupGeneratingButton("a-company","companyNumber",function() { getRandomCompanyNumber(); } );
+  setupGeneratingButton("a-vat","vatNumber",function() { getRandomTaxNumber(); } );
   setupGeneratingButton("a-establishmentunit","establishmentUnitNumber",function() { getRandomEstablishmentUnitNumber(); } );
   setupGeneratingButton("a-nsso","nssoNumber",function() { getRandomNssoNumber(); } );
   setupGeneratingButton("a-iban","iban",function() { getRandomIban(); } );
@@ -84,16 +85,29 @@ function getRandomNssoNumber() {
 	setStatus(nssonbr);
 }
 
-function getRandomCompanyNumber() {
-	var base = randomIntFromInterval(2000000,19999999);
+function generateRandomCompanyNumber(punctuation){
+  var base = randomIntFromInterval(2000000,19999999);
 	var control = 97 - base % 97;
 	var companynbr = ''.concat( 100 * base + control).padStart(10, "0");
 
-  if(getPunctuation())
+  if(punctuation)
     companynbr = companynbr.splice(7, ".").splice(4, ".");
+
+  return companynbr;
+}
+
+function getRandomCompanyNumber() {
+  companynbr = generateRandomCompanyNumber(getPunctuation());
 
 	copy(companynbr);
 	setStatus(companynbr);
+}
+
+function getRandomTaxNumber(){
+  taxnbr = "BTW BE ".concat(generateRandomCompanyNumber(getPunctuation()));
+
+	copy(taxnbr);
+	setStatus(taxnbr);
 }
 
 function getRandomRrnNumber() {
@@ -199,7 +213,6 @@ function togglePunctuation(){
 
 function loadStorageCache(){
   chrome.storage.sync.get(['punctuation'], function(result) {
-          console.log('Value currently is ' + result.punctuation);
           storageCache = result;
           updatePunctuation(result.punctuation);
         });
