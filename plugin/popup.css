@@ -4,11 +4,12 @@ html {
 
 .list-group-header {
   padding-left:0.50rem !important;
-  padding-top:0.15rem !important;
-  padding-bottom:0.15rem !important;
+  padding-top:0.10rem !important;
+  padding-bottom:0.10rem !important;
+  border-top-width: 1px !important;
 }
 
 .list-group-compact {
-  padding-top:0.15rem !important;
-  padding-bottom:0.15rem !important;
+  padding-top:0.50rem !important;
+  padding-bottom:0.50rem !important;
 }
