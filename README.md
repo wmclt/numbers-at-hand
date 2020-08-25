@@ -22,9 +22,9 @@ Suggested use case: generate randomized test-data that passes validation checks
 
 ## How to use
 
-Some options:
+Either:
 * Install the extension from the [Chrome web store](https://chrome.google.com/webstore/detail/numbers-at-hand/jncgcehddiijpaiopleohniplpafmmio)
-* Run the popup.html directly in your browser (only supports English)
+* Run the popup.html directly in your browser (only supports English ; does not allow to modify settings)
 
 ## Similar tools
 
