@@ -1,3 +1,5 @@
+var storageCache = {};
+
 document.addEventListener('DOMContentLoaded', function() {
   setupGeneratingButton("a-rrn","nationalIdentificationNumber",function() { getRandomRrnNumber(); } );
   setupGeneratingButton("a-company","companyNumber",function() { getRandomCompanyNumber(); } );
@@ -15,6 +17,19 @@ document.addEventListener('DOMContentLoaded', function() {
   initUiValue("div-companies", "sectionCompanies");
   initUiValue("div-others", "sectionOthers");
   initUiValue("div-utilities", "sectionUtilities");
+  initUiValue("lbl-punctuation", "settingPunctuation");
+
+  loadStorageCache();
+
+  document.getElementById("btn-settings").addEventListener('click',function() { toggleDisplay("div-settings"); } , false);
+  document.getElementById("chk-punctuation").addEventListener('change',(event) => { updatePunctuation(event.target.checked); } , false);
+  document.getElementById("btn-punctuation").addEventListener('click',function() { togglePunctuation(); } , false);
+
+  chrome.storage.onChanged.addListener(function(changes, namespace) {
+          for (var key in changes) {
+            storageCache[key] = changes[key].newValue;
+          }
+        });
 
 }, false);
 
@@ -29,9 +44,13 @@ function getRandomNumberPlate() {
 
 	var numberPlate = ''.concat( firstDigit).concat( firstChar).concat( secondChar).concat( thirdChar).concat( ''.concat(nextDigits).padStart(3, "0"));
 
+  if(getPunctuation())
+    numberPlate = numberPlate.splice(4, "-").splice(1, "-");
+
 	copy(numberPlate);
 	setStatus(numberPlate);
 }
+
 function getRandomEstablishmentUnitNumber() {
 	var firstDigit = randomIntFromInterval(2,8);
 	var nextDigits = randomIntFromInterval(0,9999999);
@@ -39,6 +58,9 @@ function getRandomEstablishmentUnitNumber() {
 	var base = (firstDigit*10000000) + nextDigits;
 	var checksum = (97 - base % 97);
 	var establishmentUnitNumber = ''.concat( 100 * base + checksum);
+
+  if(getPunctuation())
+     establishmentUnitNumber = establishmentUnitNumber.splice(7, ".").splice(4, ".").splice(1, ".");
 
 	copy(establishmentUnitNumber);
 	setStatus(establishmentUnitNumber);
@@ -55,6 +77,9 @@ function getRandomNssoNumber() {
 	var control = 96- (100*base)%97;
 	var nssonbr = ''.concat( 100 * base + control).padStart(9, "0");
 
+    if(getPunctuation())
+      nssonbr = nssonbr.splice(7, "-");
+
 	copy(nssonbr);
 	setStatus(nssonbr);
 }
@@ -64,7 +89,10 @@ function getRandomCompanyNumber() {
 	var control = 97 - base % 97;
 	var companynbr = ''.concat( 100 * base + control).padStart(10, "0");
 
-	copy( companynbr);
+  if(getPunctuation())
+    companynbr = companynbr.splice(7, ".").splice(4, ".");
+
+	copy(companynbr);
 	setStatus(companynbr);
 }
 
@@ -78,6 +106,9 @@ function getRandomRrnNumber() {
 	var checksum = year>=2000 ? (97 - (base+2000000000) % 97) : (97 - base % 97);
 	var rrn = ''.concat( 100 * base + checksum).padStart(11, "0");
 
+  if(getPunctuation())
+    rrn = rrn.splice(6, "-").splice(4, ".").splice(2, ".").splice(12, ".");
+
 	copy(rrn);
 	setStatus(rrn);
 }
@@ -90,6 +121,9 @@ function getRandomIban() {
   var nationalCheck = (10000000*bankcode + accountNbr)%97==0 ? 97 : (10000000*bankcode + accountNbr)%97;
 	var checksum = 98 - modulo(''+(1000000000000000*bankcode + 100000000*accountNbr + nationalCheck*1000000 + 111400), ''+97);
 	var iban = country.concat(''.concat(1000000000000*checksum + 1000000000*bankcode + 100*accountNbr + nationalCheck).padStart(14,"0"));
+
+  if(getPunctuation())
+    iban = iban.splice(12, " ").splice(8, " ").splice(4, " ");
 
 	copy(iban);
 	setStatus(iban);
@@ -123,6 +157,52 @@ function setStatus(text) {
 	stat.innerHTML = str;
 	stat.classList.add("list-group-item-success");
 	stat.classList.remove("list-group-item-secondary");
+}
+
+// **************************** Settings functions ******************************
+
+function toggleDisplay(elementId){
+  var lmnt = document.getElementById(elementId);
+
+  if (lmnt.classList.contains("d-none"))
+    lmnt.classList.remove("d-none");
+  else
+    lmnt.classList.add("d-none");
+}
+
+function updatePunctuation(value){
+  chrome.storage.sync.set({'punctuation': value}, function(){
+          console.log('Value is set to ' + value);
+        });
+
+  var lmnt = document.getElementById("btn-punctuation");
+
+  if (value){
+    lmnt.classList.add("text-enabled");
+    lmnt.classList.remove("text-disabled");
+  }
+  else{
+    lmnt.classList.add("text-disabled");
+    lmnt.classList.remove("text-enabled");
+  }
+
+   document.getElementById("chk-punctuation").checked = value;
+}
+
+function getPunctuation(){
+  return storageCache.punctuation;
+}
+
+function togglePunctuation(){
+  updatePunctuation(!getPunctuation());
+}
+
+function loadStorageCache(){
+  chrome.storage.sync.get(['punctuation'], function(result) {
+          console.log('Value currently is ' + result.punctuation);
+          storageCache = result;
+          updatePunctuation(result.punctuation);
+        });
 }
 
 // **************************** Setup functions ******************************
@@ -164,6 +244,9 @@ function modulo (divident, divisor) {
   var cRest = '';
 
   for (var i in divident ) {
+    if(i=="splice")
+    break;
+
     var cChar = divident[i];
     var cOperator = cRest + '' + cDivident + '' + cChar;
 
@@ -182,4 +265,19 @@ function modulo (divident, divisor) {
       cRest = 0;
   }
   return cRest;
+}
+
+if (String.prototype.splice === undefined) {
+  /**
+   * Splices text within a string.
+   * @param {int} offset The position to insert the text at (before)
+   * @param {string} text The text to insert
+   * @param {int} [removeCount=0] An optional number of characters to overwrite
+   * @returns {string} A modified string containing the spliced text.
+   */
+  String.prototype.splice = function(offset, text, removeCount=0) {
+    let calculatedOffset = offset < 0 ? this.length + offset : offset;
+    return this.substring(0, calculatedOffset) +
+      text + this.substring(calculatedOffset + removeCount);
+  };
 }

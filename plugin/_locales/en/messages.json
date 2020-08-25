@@ -59,5 +59,8 @@
 	},
 	"sectionUtilities": {
 		"message": "Utilities"
+	},
+	"settingPunctuation": {
+		"message": "Punctuation (. -)"
 	}
 }
