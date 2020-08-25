@@ -30,10 +30,25 @@
       <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-uuid">Nil UUID</a>
       <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-datetime">Current UTC Datetime</a>
 
-      <!-- Status -->
+      <!-- Status & settings -->
       <div class="list-group-item list-group-item-secondary list-group-compact font-italic" id="div-status">Click a number-type to generate it</div>
-    </div>
 
+      <ul class="list-group list-group-horizontal">
+        <a type="button" class="list-group-item list-group-compact flex-fill btn btn-light text-disabled font-weight-bold " id="btn-punctuation">. -</a>
+        <li              class="list-group-item list-group-compact flex-fill text-center">🇧🇪</li>
+        <a type="button" class="list-group-item list-group-compact flex-fill btn btn-light" id="btn-settings">⚙️</a>
+      </ul>
+
+      <div class="form-check d-none" id="div-settings">
+        <div class="custom-control custom-switch">
+          <input class="custom-control-input" type="checkbox" value="" id="chk-punctuation">
+          <label class="custom-control-label" for="chk-punctuation" id="lbl-punctuation">
+              Punctuation (. -)
+          </label>
+        </div>
+      </div>
+
+    </div>
     <script src="popup.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

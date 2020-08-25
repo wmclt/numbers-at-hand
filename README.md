@@ -16,6 +16,8 @@ Generate other useful strings:
 
 When generating a number, it is copied to your clipboard, so you can use it anywhere.
 
+Numbers can be generated either with or without the default punctuation.
+
 Suggested use case: generate randomized test-data that passes validation checks
 
 ## How to use

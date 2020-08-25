@@ -59,5 +59,8 @@
 	},
 	"sectionUtilities": {
 		"message": "Utilități"
+	},
+	"settingPunctuation": {
+		"message": "Punctuaţie (. -)"
 	}
 }

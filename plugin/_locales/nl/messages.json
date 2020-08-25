@@ -12,7 +12,7 @@
 		"message": "Lege UUID"
 	},
 	"nationalIdentificationNumber": {
-		"message": "🇧🇪 Rijksregisternummer",
+		"message": "🇧🇪 Rijksregisternummer (INSZ)",
 		"description":"Identificatienummer bij het Rijksregister. www.ibz.rrn.fgov.be"
 	},
 	"companyNumber": {
@@ -59,5 +59,8 @@
 	},
 	"sectionUtilities": {
 		"message": "Utilities"
+	},
+	"settingPunctuation": {
+		"message": "Interpunctie (. -)"
 	}
 }
