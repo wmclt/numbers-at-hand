@@ -3,7 +3,7 @@ var storageCache = {};
 document.addEventListener('DOMContentLoaded', function() {
   setupGeneratingButton("a-rrn","nationalIdentificationNumber",function() { getRandomRrnNumber(); } );
   setupGeneratingButton("a-company","companyNumber",function() { getRandomCompanyNumber(); } );
-  setupGeneratingButton("a-vat","vatNumber",function() { getRandomTaxNumber(); } );
+  setupGeneratingButton("a-vat","vatNumber",function() { getRandomVatNumber(); } );
   setupGeneratingButton("a-establishmentunit","establishmentUnitNumber",function() { getRandomEstablishmentUnitNumber(); } );
   setupGeneratingButton("a-nsso","nssoNumber",function() { getRandomNssoNumber(); } );
   setupGeneratingButton("a-iban","iban",function() { getRandomIban(); } );
@@ -103,11 +103,17 @@ function getRandomCompanyNumber() {
 	setStatus(companynbr);
 }
 
-function getRandomTaxNumber(){
-  taxnbr = "BTW BE ".concat(generateRandomCompanyNumber(getPunctuation()));
+function getRandomVatNumber(){
+  var vat = "";
+  var companyNbr = generateRandomCompanyNumber(getPunctuation());
 
-	copy(taxnbr);
-	setStatus(taxnbr);
+  if(getPunctuation())
+    vat = "BTW BE ".concat(companyNbr);
+  else
+    vat = "BE".concat(companyNbr);
+
+	copy(vat);
+	setStatus(vat);
 }
 
 function getRandomRrnNumber() {
