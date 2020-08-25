@@ -62,5 +62,8 @@
 	},
 	"settingPunctuation": {
 		"message": "Interpunctie (. -)"
+	},
+	"vatNumber": {
+		"message": "🇧🇪 BTW-nummer"
 	}
 }

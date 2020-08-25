@@ -62,5 +62,8 @@
 	},
 	"settingPunctuation": {
 		"message": "Ponctuation (. -)"
+	},
+	"vatNumber": {
+		"message": "🇧🇪 Numéro de TVA"
 	}
 }
