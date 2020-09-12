@@ -12,7 +12,7 @@ Generate valid Belgian numbers for these types:
 * IBAN
 
 Generate other useful strings:
-* Nil UUID
+* Nil UUID / v4 UUID
 * Current UTC datetime (ISO 8601)
 
 When generating a number, it is copied to your clipboard, so you can use it anywhere.
