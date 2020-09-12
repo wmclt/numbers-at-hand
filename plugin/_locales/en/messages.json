@@ -11,6 +11,9 @@
   "uuid": {
     "message": "Nil UUID"
   },
+  "uuidv4": {
+    "message": "V4 UUID"
+  },
   "nationalIdentificationNumber": {
     "message": "🇧🇪 National identification number",
     "description": "Identifying number at www.ibz.rrn.fgov.be"
