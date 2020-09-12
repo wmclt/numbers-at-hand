@@ -1,69 +1,72 @@
 {
-	"extensionname": {
-		"message": "Numbers at hand"
-	},
-	"extensiondescription": {
-		"message": "This extension allows you to generate valid numbers that can identify people, companies, etc."
-	},
-	"extensionhovertext": {
-		"message": "Numbers at hand"
-	},
-	"uuid": {
-		"message": "Nil UUID"
-	},
-	"nationalIdentificationNumber": {
-		"message": "🇧🇪 National identification number",
-		"description":"Identifying number at www.ibz.rrn.fgov.be"
-	},
-	"companyNumber": {
-		"message": "🇧🇪 Enterprise number",
-		"description":"Identifying number at Crossroads Bank for Enterprises. kbopub.economie.fgov.be"
-	},
-	"nssoNumber": {
-		"message": "🇧🇪 NSSO number",
-		"description":"Identifying number at National Social Security Office. www.rsz.fgov.be"
-	},
-	"iban": {
-		"message": "🇧🇪 IBAN",
-		"description": "International Bank Account Number"
-	},
-	"defaultStatus": {
-		"message": "Click a number-type to generate it"
-	},
-	"copiedToClipboard": {
-		"message": "$value$ copied to clipboard",
-		"placeholders": {
-          "value": {
-            "content": "$1",
-            "example": "1234567890"
-          }
-        }
-	},
-	"currentDatetime": {
-		"message": "Current UTC Datetime"
-	},
-	"establishmentUnitNumber": {
-		"message": "🇧🇪 Establishment unit number"
-	},
-	"numberPlate": {
-		"message": "🇧🇪 Number plate"
-	},
-	"sectionPeople": {
-		"message": "People"
-	},
-	"sectionCompanies": {
-		"message": "Companies"
-	},
-	"sectionOthers": {
-		"message": "Others"
-	},
-	"sectionUtilities": {
-		"message": "Utilities"
-	},
-	"settingPunctuation": {
-		"message": "Punctuation (. -)"
-	},
-	"vatNumber": {
-		"message": "🇧🇪 VAT number"
-	}
+  "extensionname": {
+    "message": "Numbers at hand"
+  },
+  "extensiondescription": {
+    "message": "This extension allows you to generate valid numbers that can identify people, companies, etc."
+  },
+  "extensionhovertext": {
+    "message": "Numbers at hand"
+  },
+  "uuid": {
+    "message": "Nil UUID"
+  },
+  "nationalIdentificationNumber": {
+    "message": "🇧🇪 National identification number",
+    "description": "Identifying number at www.ibz.rrn.fgov.be"
+  },
+  "companyNumber": {
+    "message": "🇧🇪 Enterprise number",
+    "description": "Identifying number at Crossroads Bank for Enterprises. kbopub.economie.fgov.be"
+  },
+  "nssoNumber": {
+    "message": "🇧🇪 NSSO number",
+    "description": "Identifying number at National Social Security Office. www.rsz.fgov.be"
+  },
+  "iban": {
+    "message": "🇧🇪 IBAN",
+    "description": "International Bank Account Number"
+  },
+  "defaultStatus": {
+    "message": "Click a number-type to generate it"
+  },
+  "copiedToClipboard": {
+    "message": "$value$ copied to clipboard",
+    "placeholders": {
+      "value": {
+        "content": "$1",
+        "example": "1234567890"
+      }
+    }
+  },
+  "currentDatetime": {
+    "message": "Current UTC Datetime"
+  },
+  "establishmentUnitNumber": {
+    "message": "🇧🇪 Establishment unit number"
+  },
+  "numberPlate": {
+    "message": "🇧🇪 Number plate"
+  },
+  "sectionPeople": {
+    "message": "People"
+  },
+  "sectionCompanies": {
+    "message": "Companies"
+  },
+  "sectionOthers": {
+    "message": "Others"
+  },
+  "sectionUtilities": {
+    "message": "Utilities"
+  },
+  "settingPunctuation": {
+    "message": "Punctuation (. -)"
+  },
+  "settingDarkMode": {
+    "message": "Dark mode"
+  },
+  "vatNumber": {
+    "message": "🇧🇪 VAT number"
+  }
 }

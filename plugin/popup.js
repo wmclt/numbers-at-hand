@@ -1,16 +1,16 @@
 var storageCache = {};
 
 document.addEventListener('DOMContentLoaded', function() {
-  setupGeneratingButton("a-rrn","nationalIdentificationNumber",function() { getRandomRrnNumber(); } );
-  setupGeneratingButton("a-company","companyNumber",function() { getRandomCompanyNumber(); } );
-  setupGeneratingButton("a-vat","vatNumber",function() { getRandomVatNumber(); } );
-  setupGeneratingButton("a-establishmentunit","establishmentUnitNumber",function() { getRandomEstablishmentUnitNumber(); } );
-  setupGeneratingButton("a-nsso","nssoNumber",function() { getRandomNssoNumber(); } );
-  setupGeneratingButton("a-iban","iban",function() { getRandomIban(); } );
-  setupGeneratingButton("a-numberplate","numberPlate",function() { getRandomNumberPlate(); } );
+  setupGeneratingButton("a-rrn", "nationalIdentificationNumber", function() { getRandomRrnNumber(); });
+  setupGeneratingButton("a-company", "companyNumber", function() { getRandomCompanyNumber(); });
+  setupGeneratingButton("a-vat", "vatNumber", function() { getRandomVatNumber(); });
+  setupGeneratingButton("a-establishmentunit", "establishmentUnitNumber", function() { getRandomEstablishmentUnitNumber(); });
+  setupGeneratingButton("a-nsso", "nssoNumber", function() { getRandomNssoNumber(); });
+  setupGeneratingButton("a-iban", "iban", function() { getRandomIban(); });
+  setupGeneratingButton("a-numberplate", "numberPlate", function() { getRandomNumberPlate(); });
 
-  setupGeneratingButton("a-uuid","uuid",function() { getNilUuid(); }  );
-  setupGeneratingButton("a-datetime","currentDatetime",function() { getCurrentUtcDatetime(); }  );
+  setupGeneratingButton("a-uuid", "uuid", function() { getNilUuid(); });
+  setupGeneratingButton("a-datetime", "currentDatetime", function() { getCurrentUtcDatetime(); });
 
   initUiValue("title", "extensionname");
   initUiValue("div-status", "defaultStatus");
@@ -19,169 +19,170 @@ document.addEventListener('DOMContentLoaded', function() {
   initUiValue("div-others", "sectionOthers");
   initUiValue("div-utilities", "sectionUtilities");
   initUiValue("lbl-punctuation", "settingPunctuation");
+  initUiValue("lbl-darkMode", "settingDarkMode");
 
   loadStorageCache();
 
-  document.getElementById("btn-settings").addEventListener('click',function() { toggleDisplay("div-settings"); } , false);
-  document.getElementById("chk-punctuation").addEventListener('change',(event) => { updatePunctuation(event.target.checked); } , false);
-  document.getElementById("btn-punctuation").addEventListener('click',function() { togglePunctuation(); } , false);
+  document.getElementById("btn-settings").addEventListener('click', function() { toggleDisplay("div-settings"); }, false);
+  document.getElementById("chk-punctuation").addEventListener('change', (event) => { updatePunctuation(event.target.checked); }, false);
+  document.getElementById("btn-punctuation").addEventListener('click', function() { togglePunctuation(); }, false);
+  document.getElementById("chk-darkMode").addEventListener('change', (event) => { updateDarkMode(event.target.checked); }, false);
 
   chrome.storage.onChanged.addListener(function(changes, namespace) {
-          for (var key in changes) {
-            storageCache[key] = changes[key].newValue;
-          }
-        });
+    for (var key in changes) {
+      storageCache[key] = changes[key].newValue;
+    }
+  });
 
 }, false);
 
 // **************************** Core functionality *****************************
 
 function getRandomNumberPlate() {
-	var firstDigit = randomIntFromInterval(1,7);
-  var firstChar = String.fromCharCode(randomIntFromInterval(65,90));
-  var secondChar = String.fromCharCode(randomIntFromInterval(65,90));
-  var thirdChar = String.fromCharCode(randomIntFromInterval(65,90));
-	var nextDigits = randomIntFromInterval(0,999);
+  var firstDigit = randomIntFromInterval(1, 7);
+  var firstChar = String.fromCharCode(randomIntFromInterval(65, 90));
+  var secondChar = String.fromCharCode(randomIntFromInterval(65, 90));
+  var thirdChar = String.fromCharCode(randomIntFromInterval(65, 90));
+  var nextDigits = randomIntFromInterval(0, 999);
 
-	var numberPlate = ''.concat( firstDigit).concat( firstChar).concat( secondChar).concat( thirdChar).concat( ''.concat(nextDigits).padStart(3, "0"));
+  var numberPlate = ''.concat(firstDigit).concat(firstChar).concat(secondChar).concat(thirdChar).concat(''.concat(nextDigits).padStart(3, "0"));
 
-  if(getPunctuation())
+  if (getPunctuation())
     numberPlate = numberPlate.splice(4, "-").splice(1, "-");
 
-	copy(numberPlate);
-	setStatus(numberPlate);
+  copy(numberPlate);
+  setStatus(numberPlate);
 }
 
 function getRandomEstablishmentUnitNumber() {
-	var firstDigit = randomIntFromInterval(2,8);
-	var nextDigits = randomIntFromInterval(0,9999999);
+  var firstDigit = randomIntFromInterval(2, 8);
+  var nextDigits = randomIntFromInterval(0, 9999999);
 
-	var base = (firstDigit*10000000) + nextDigits;
-	var checksum = (97 - base % 97);
-	var establishmentUnitNumber = ''.concat( 100 * base + checksum);
+  var base = (firstDigit * 10000000) + nextDigits;
+  var checksum = (97 - base % 97);
+  var establishmentUnitNumber = ''.concat(100 * base + checksum);
 
-  if(getPunctuation())
-     establishmentUnitNumber = establishmentUnitNumber.splice(7, ".").splice(4, ".").splice(1, ".");
+  if (getPunctuation())
+    establishmentUnitNumber = establishmentUnitNumber.splice(7, ".").splice(4, ".").splice(1, ".");
 
-	copy(establishmentUnitNumber);
-	setStatus(establishmentUnitNumber);
+  copy(establishmentUnitNumber);
+  setStatus(establishmentUnitNumber);
 }
 
 function getNilUuid() {
-	var uuid = "00000000-0000-0000-0000-000000000000"
-	copy(uuid);
-	setStatus(uuid);
+  var uuid = "00000000-0000-0000-0000-000000000000"
+  copy(uuid);
+  setStatus(uuid);
 }
 
 function getRandomNssoNumber() {
-	var base = randomIntFromInterval(1000,1999999);
-	var control = 96- (100*base)%97;
-	var nssonbr = ''.concat( 100 * base + control).padStart(9, "0");
+  var base = randomIntFromInterval(1000, 1999999);
+  var control = 96 - (100 * base) % 97;
+  var nssonbr = ''.concat(100 * base + control).padStart(9, "0");
 
-    if(getPunctuation())
-      nssonbr = nssonbr.splice(7, "-");
+  if (getPunctuation())
+    nssonbr = nssonbr.splice(7, "-");
 
-	copy(nssonbr);
-	setStatus(nssonbr);
+  copy(nssonbr);
+  setStatus(nssonbr);
 }
 
-function generateRandomCompanyNumber(punctuation){
-  var base = randomIntFromInterval(2000000,19999999);
-	var control = 97 - base % 97;
-	var companynbr = ''.concat( 100 * base + control).padStart(10, "0");
+function generateRandomCompanyNumber() {
+  var base = randomIntFromInterval(2000000, 19999999);
+  var control = 97 - base % 97;
+  var companynbr = ''.concat(100 * base + control).padStart(10, "0");
 
-  if(punctuation)
+  if (getPunctuation())
     companynbr = companynbr.splice(7, ".").splice(4, ".");
 
   return companynbr;
 }
 
 function getRandomCompanyNumber() {
-  companynbr = generateRandomCompanyNumber(getPunctuation());
+  companynbr = generateRandomCompanyNumber();
 
-	copy(companynbr);
-	setStatus(companynbr);
+  copy(companynbr);
+  setStatus(companynbr);
 }
 
-function getRandomVatNumber(){
+function getRandomVatNumber() {
   var vat = "";
-  var companyNbr = generateRandomCompanyNumber(getPunctuation());
+  var companyNbr = generateRandomCompanyNumber();
 
-  if(getPunctuation())
+  if (getPunctuation())
     vat = "BTW BE ".concat(companyNbr);
   else
     vat = "BE".concat(companyNbr);
 
-	copy(vat);
-	setStatus(vat);
+  copy(vat);
+  setStatus(vat);
 }
 
 function getRandomRrnNumber() {
-	var year = randomIntFromInterval(1920,2019);
-	var month = randomIntFromInterval(1,12);
-	var day = randomIntFromInterval(1,28);
-	var counter = randomIntFromInterval(1,999);
+  var year = randomIntFromInterval(1920, 2019);
+  var month = randomIntFromInterval(1, 12);
+  var day = randomIntFromInterval(1, 28);
+  var counter = randomIntFromInterval(1, 999);
 
-	var base = ((year%100)*10000000) + (month*100000) + (day*1000) + (counter);
-	var checksum = year>=2000 ? (97 - (base+2000000000) % 97) : (97 - base % 97);
-	var rrn = ''.concat( 100 * base + checksum).padStart(11, "0");
+  var base = ((year % 100) * 10000000) + (month * 100000) + (day * 1000) + (counter);
+  var checksum = year >= 2000 ? (97 - (base + 2000000000) % 97) : (97 - base % 97);
+  var rrn = ''.concat(100 * base + checksum).padStart(11, "0");
 
-  if(getPunctuation())
+  if (getPunctuation())
     rrn = rrn.splice(6, "-").splice(4, ".").splice(2, ".").splice(12, ".");
 
-	copy(rrn);
-	setStatus(rrn);
+  copy(rrn);
+  setStatus(rrn);
 }
 
 function getRandomIban() {
-	var country = "BE";
-	var bankcode = randomIntFromInterval(0,999); //https://www.nbb.be/en/payments-and-securities/payment-standards/bank-identification-codes
-	var accountNbr = randomIntFromInterval(0,9999999);
+  var country = "BE";
+  var bankcode = randomIntFromInterval(0, 999); //https://www.nbb.be/en/payments-and-securities/payment-standards/bank-identification-codes
+  var accountNbr = randomIntFromInterval(0, 9999999);
 
-  var nationalCheck = (10000000*bankcode + accountNbr)%97==0 ? 97 : (10000000*bankcode + accountNbr)%97;
-	var checksum = 98 - modulo(''+(1000000000000000*bankcode + 100000000*accountNbr + nationalCheck*1000000 + 111400), ''+97);
-	var iban = country.concat(''.concat(1000000000000*checksum + 1000000000*bankcode + 100*accountNbr + nationalCheck).padStart(14,"0"));
+  var nationalCheck = (10000000 * bankcode + accountNbr) % 97 == 0 ? 97 : (10000000 * bankcode + accountNbr) % 97;
+  var checksum = 98 - modulo('' + (1000000000000000 * bankcode + 100000000 * accountNbr + nationalCheck * 1000000 + 111400), '' + 97);
+  var iban = country.concat(''.concat(1000000000000 * checksum + 1000000000 * bankcode + 100 * accountNbr + nationalCheck).padStart(14, "0"));
 
-  if(getPunctuation())
+  if (getPunctuation())
     iban = iban.splice(12, " ").splice(8, " ").splice(4, " ");
 
-	copy(iban);
-	setStatus(iban);
+  copy(iban);
+  setStatus(iban);
 }
 
 function getCurrentUtcDatetime() {
-	var datetime = new Date().toISOString();
+  var datetime = new Date().toISOString();
 
-	copy(datetime);
-	setStatus(datetime);
+  copy(datetime);
+  setStatus(datetime);
 }
 
 // **************************** Status functions ******************************
 
 function resetStatus(text) {
   var stat = document.getElementById('div-status');
-	stat.classList.add("list-group-item-secondary");
-	stat.classList.remove("list-group-item-success");
+  stat.classList.add("list-group-item-secondary");
+  stat.classList.remove("list-group-item-success");
 }
 
 function setStatus(text) {
   var str = "";
   try {
-    str = chrome.i18n.getMessage("copiedToClipboard",[text]);
-  }
-  catch(err) {
+    str = chrome.i18n.getMessage("copiedToClipboard", [text]);
+  } catch (err) {
     str = text + ' copied to clipboard';
   }
 
   var stat = document.getElementById('div-status');
-	stat.innerHTML = str;
-	stat.classList.add("list-group-item-success");
-	stat.classList.remove("list-group-item-secondary");
+  stat.innerHTML = str;
+  stat.classList.add("list-group-item-success");
+  stat.classList.remove("list-group-item-secondary");
 }
 
 // **************************** Settings functions ******************************
 
-function toggleDisplay(elementId){
+function toggleDisplay(elementId) {
   var lmnt = document.getElementById(elementId);
 
   if (lmnt.classList.contains("d-none"))
@@ -190,45 +191,66 @@ function toggleDisplay(elementId){
     lmnt.classList.add("d-none");
 }
 
-function updatePunctuation(value){
-  chrome.storage.sync.set({'punctuation': value}, function(){
-          console.log('Value is set to ' + value);
-        });
+function updatePunctuation(value) {
+  chrome.storage.sync.set({ 'punctuation': value }, function() {
+    console.log('Value is set to ' + value);
+  });
 
   var lmnt = document.getElementById("btn-punctuation");
 
-  if (value){
+  if (value) {
     lmnt.classList.add("text-enabled");
     lmnt.classList.remove("text-disabled");
-  }
-  else{
+  } else {
     lmnt.classList.add("text-disabled");
     lmnt.classList.remove("text-enabled");
   }
 
-   document.getElementById("chk-punctuation").checked = value;
+  document.getElementById("chk-punctuation").checked = value;
 }
 
-function getPunctuation(){
+function updateDarkMode(value) {
+  chrome.storage.sync.set({ 'darkMode': value }, function() {
+    console.log('Value is set to ' + value);
+  });
+
+  value
+    ?
+    document.body.setAttribute("data-theme", "dark") :
+    document.body.removeAttribute("data-theme");
+
+  document.getElementById("chk-darkMode").checked = value;
+}
+
+function getPunctuation() {
   return storageCache.punctuation;
 }
 
-function togglePunctuation(){
+function getDarkMode() {
+  return storageCache.darkMode;
+}
+
+function togglePunctuation() {
   updatePunctuation(!getPunctuation());
 }
 
-function loadStorageCache(){
-  chrome.storage.sync.get(['punctuation'], function(result) {
-          storageCache = result;
-          updatePunctuation(result.punctuation);
-        });
+function toggleDarkMode() {
+  updateDarkMode(!getDarkMode());
+}
+
+function loadStorageCache() {
+  chrome.storage.sync.get(['punctuation', 'darkMode'], function(result) {
+    storageCache = result;
+    updatePunctuation(result.punctuation);
+    updateDarkMode(result.darkMode);
+  });
 }
 
 // **************************** Setup functions ******************************
 
 function setupGeneratingButton(elementId, messageId, func) {
   var btn = document.getElementById(elementId);
-  btn.addEventListener('click', func , false);
+  btn.addEventListener('click', func, false);
   btn.addEventListener('mouseout', function() { resetStatus(); }, false);
   initUiValue(elementId, messageId);
 }
@@ -236,8 +258,7 @@ function setupGeneratingButton(elementId, messageId, func) {
 function initUiValue(elementId, messageId) {
   try {
     document.getElementById(elementId).innerHTML = chrome.i18n.getMessage(messageId);
-  }
-  catch(err) {
+  } catch (err) {
     ; //[Uncaught TypeError: Cannot read property 'getMessage' of undefined] if webpage loaded directly
   }
 }
@@ -258,30 +279,30 @@ function copy(text) {
   return result;
 }
 
-function modulo (divident, divisor) {
+function modulo(divident, divisor) {
   var cDivident = '';
   var cRest = '';
 
-  for (var i in divident ) {
-    if(i=="splice")
-    break;
+  for (var i in divident) {
+    if (i == "splice")
+      break;
 
     var cChar = divident[i];
     var cOperator = cRest + '' + cDivident + '' + cChar;
 
-    if ( cOperator < parseInt(divisor) ) {
-            cDivident += '' + cChar;
+    if (cOperator < parseInt(divisor)) {
+      cDivident += '' + cChar;
     } else {
-            cRest = cOperator % divisor;
-            if ( cRest == 0 ) {
-                cRest = '';
-            }
-            cDivident = '';
+      cRest = cOperator % divisor;
+      if (cRest == 0) {
+        cRest = '';
+      }
+      cDivident = '';
     }
   }
   cRest += '' + cDivident;
   if (cRest == '') {
-      cRest = 0;
+    cRest = 0;
   }
   return cRest;
 }
@@ -294,7 +315,7 @@ if (String.prototype.splice === undefined) {
    * @param {int} [removeCount=0] An optional number of characters to overwrite
    * @returns {string} A modified string containing the spliced text.
    */
-  String.prototype.splice = function(offset, text, removeCount=0) {
+  String.prototype.splice = function(offset, text, removeCount = 0) {
     let calculatedOffset = offset < 0 ? this.length + offset : offset;
     return this.substring(0, calculatedOffset) +
       text + this.substring(calculatedOffset + removeCount);

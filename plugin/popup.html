@@ -1,59 +1,72 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title id="title">Numbers at hand</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="popup.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  </head>
-  <body>
-    <div class="list-group">
 
-      <!-- People -->
-      <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-people">People</div>
-      <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-rrn">🇧🇪 National identification number</a>
+<head>
+  <title id="title">Numbers at hand</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="dark-mode.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
 
-      <!-- Companies -->
-      <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-companies">Companies</div>
-      <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-company">🇧🇪 Company number</a>
-      <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-vat">🇧🇪 VAT number</a>
-      <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-establishmentunit">🇧🇪 Establishment unit number</a>
-      <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-nsso">🇧🇪 NSSO number</a>
+<body>
+  <div class="list-group">
 
-      <!-- Others -->
-      <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-others">Others</div>
-      <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-numberplate">🇧🇪 Number plate</a>
-      <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-iban">🇧🇪 IBAN</a>
+    <!-- People -->
+    <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-people">People</div>
+    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-rrn">🇧🇪 National identification number</a>
 
-      <!-- Utilities -->
-      <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-utilities">Utilities</div>
-      <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-uuid">Nil UUID</a>
-      <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-datetime">Current UTC Datetime</a>
+    <!-- Companies -->
+    <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-companies">Companies</div>
+    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-company">🇧🇪 Company number</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-vat">🇧🇪 VAT number</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-establishmentunit">🇧🇪 Establishment unit number</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-nsso">🇧🇪 NSSO number</a>
 
-      <!-- Status & settings -->
-      <div class="list-group-item list-group-item-secondary list-group-compact font-italic" id="div-status">Click a number-type to generate it</div>
+    <!-- Others -->
+    <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-others">Others</div>
+    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-numberplate">🇧🇪 Number plate</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-iban">🇧🇪 IBAN</a>
 
-      <ul class="list-group list-group-horizontal">
-        <a type="button" class="list-group-item list-group-compact flex-fill btn btn-light text-disabled font-weight-bold " id="btn-punctuation">. -</a>
-        <li              class="list-group-item list-group-compact flex-fill text-center">🇧🇪</li>
-        <a type="button" class="list-group-item list-group-compact flex-fill btn btn-light" id="btn-settings">⚙️</a>
-      </ul>
+    <!-- Utilities -->
+    <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-utilities">Utilities</div>
+    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-uuid">Nil UUID</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-datetime">Current UTC Datetime</a>
 
-      <div class="form-check d-none" id="div-settings">
-        <div class="custom-control custom-switch">
-          <input class="custom-control-input" type="checkbox" value="" id="chk-punctuation">
-          <label class="custom-control-label" for="chk-punctuation" id="lbl-punctuation">
-              Punctuation (. -)
-          </label>
-        </div>
+    <!-- Status & settings -->
+    <div class="list-group-item list-group-item-secondary list-group-compact font-italic" id="div-status">Click a number-type to generate it</div>
+
+    <ul class="list-group list-group-horizontal">
+      <a type="button" class="list-group-item list-group-compact flex-fill btn btn-light text-disabled font-weight-bold " id="btn-punctuation">. -</a>
+      <li class="list-group-item list-group-compact flex-fill text-center">🇧🇪</li>
+      <a type="button" class="list-group-item list-group-compact flex-fill btn btn-light" id="btn-settings">⚙️</a>
+    </ul>
+
+    <div class="form-check d-none" id="div-settings">
+
+      <div class="custom-control custom-switch">
+        <input class="custom-control-input" type="checkbox" value="" id="chk-punctuation">
+        <label class="custom-control-label" for="chk-punctuation" id="lbl-punctuation">
+          Punctuation (. -)
+        </label>
       </div>
 
+      <!-- https://raw.githubusercontent.com/coliff/dark-mode-switch -->
+      <div class="custom-control custom-switch">
+        <input class="custom-control-input" type="checkbox" value="" id="chk-darkMode" />
+        <label class="custom-control-label" for="chk-darkMode" id="lbl-darkMode">
+          Dark mode
+        </label>
+      </div>
     </div>
-    <script src="popup.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
-  </body>
+  </div>
+  <script src="popup.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+</body>
+
 </html>
