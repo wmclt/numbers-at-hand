@@ -273,10 +273,11 @@ function loadStorageCache() {
 // **************************** Setup functions ******************************
 
 function setupGeneratingButton(elementId, messageId, func) {
-  var btn = document.getElementById(elementId);
-  btn.addEventListener('click', func, false);
-  btn.addEventListener('mouseout', function() { resetStatus(); }, false);
+  var lmnt = document.getElementById(elementId);
+  lmnt.addEventListener('click', func, false);
+  lmnt.addEventListener('mouseout', function() { resetStatus(); }, false);
   initUiValue(elementId, messageId);
+  lmnt.classList.add("generator");
 }
 
 function initUiValue(elementId, messageId) {
@@ -287,7 +288,71 @@ function initUiValue(elementId, messageId) {
   }
 }
 
+// **************************** Google analytics ******************************
+
+var _AnalyticsCode = 'UA-177843535-1';
+
+/**
+ * Below is a modified version of the Google Analytics asynchronous tracking
+ * code snippet.  It has been modified to pull the HTTPS version of ga.js
+ * instead of the default HTTP version.  It is recommended that you use this
+ * snippet instead of the standard tracking snippet provided when setting up
+ * a Google Analytics account.
+ */
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', _AnalyticsCode]);
+_gaq.push(['_trackPageview']);
+_gaq.push(['_setCustomVar', 1, 'DarkMode', getDarkMode(), 1]);
+_gaq.push(['_setCustomVar', 2, 'DarkMode', getDarkMode(), 1]);
+
+(function() {
+  var ga = document.createElement('script');
+  ga.type = 'text/javascript';
+  ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(ga, s);
+})();
+/**
+ * Track a click on a button using the asynchronous tracking API.
+ *
+ * See http://code.google.com/apis/analytics/docs/tracking/asyncTracking.html
+ * for information on how to use the asynchronous tracking API.
+ */
+function trackButtonClick(e) {
+  if (e.target.classList.contains("generator"))
+    _gaq.push(['_trackEvent', 'Number generation', e.target.innerText, "Punctuation " + (getPunctuation() ? "on" : "off"), ]);
+  else
+    _gaq.push(['_trackEvent', 'Unclassified', e.target.id, e.target.innerText]);
+}
+/**
+ * Now set up your event handlers for the popup's `button` elements once the
+ * popup's DOM has loaded.
+ */
+document.addEventListener('DOMContentLoaded', function() {
+  var buttons = document.querySelectorAll('a,input,li'); //TODO: use class to mark trackable items?
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', trackButtonClick);
+  }
+});
+
 // **************************** Helper functions ******************************
+
+
+function readTextFile(file) { //https://stackoverflow.com/questions/14446447/how-to-read-a-local-text-file
+  var rawFile = new XMLHttpRequest();
+  rawFile.open("GET", file, false);
+  rawFile.onreadystatechange = function() {
+    if (rawFile.readyState === 4) {
+      if (rawFile.status === 200 || rawFile.status == 0) {
+        var allText = rawFile.responseText;
+        //  alert(allText);
+        return allText;
+      }
+    }
+  }
+  rawFile.send(null);
+}
 
 function randomIntFromInterval(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -344,4 +409,11 @@ if (String.prototype.splice === undefined) {
     return this.substring(0, calculatedOffset) +
       text + this.substring(calculatedOffset + removeCount);
   };
+}
+
+function getLang() { //https://stackoverflow.com/questions/673905/best-way-to-determine-users-locale-within-browser
+  if (navigator.languages != undefined)
+    return navigator.languages[0];
+  else
+    return navigator.language;
 }
