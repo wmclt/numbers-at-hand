@@ -3,16 +3,7 @@ var storageCache = {};
 document.addEventListener('DOMContentLoaded', function() {
   loadStorageCache();
 
-  addGenerator("sectionPeople", "nationalIdentificationNumber", function() { getRandomRrnNumber(); });
-  addGenerator("sectionCompanies", "companyNumber", function() { getRandomCompanyNumber(); });
-  addGenerator("sectionCompanies", "vatNumber", function() { getRandomVatNumber(); });
-  addGenerator("sectionCompanies", "establishmentUnitNumber", function() { getRandomEstablishmentUnitNumber(); });
-  addGenerator("sectionCompanies", "nssoNumber", function() { getRandomNssoNumber(); });
-  addGenerator("sectionOthers", "numberPlate", function() { getRandomNumberPlate(); });
-  addGenerator("sectionOthers", "iban", function() { getRandomIban(); });
-  addGenerator("sectionUtilities", "uuid", function() { getNilUuid(); });
-  addGenerator("sectionUtilities", "uuidv4", function() { getV4Uuid(); });
-  addGenerator("sectionUtilities", "currentDatetime", function() { getCurrentUtcDatetime(); });
+  addGenerators();
 
   initUiValue("title", "extensionname");
   initUiValue("div-status", "defaultStatus");
@@ -32,6 +23,18 @@ document.addEventListener('DOMContentLoaded', function() {
 }, false);
 
 // **************************** Core functionality *****************************
+function addGenerators() {
+  addGenerator("sectionPeople", "nationalIdentificationNumber", function() { getRandomRrnNumber(); });
+  addGenerator("sectionCompanies", "companyNumber", function() { getRandomCompanyNumber(); });
+  addGenerator("sectionCompanies", "vatNumber", function() { getRandomVatNumber(); });
+  addGenerator("sectionCompanies", "establishmentUnitNumber", function() { getRandomEstablishmentUnitNumber(); });
+  addGenerator("sectionCompanies", "nssoNumber", function() { getRandomNssoNumber(); });
+  addGenerator("sectionOthers", "numberPlate", function() { getRandomNumberPlate(); });
+  addGenerator("sectionOthers", "iban", function() { getRandomIban(); });
+  addGenerator("sectionUtilities", "uuid", function() { getNilUuid(); });
+  addGenerator("sectionUtilities", "uuidv4", function() { getV4Uuid(); });
+  addGenerator("sectionUtilities", "currentDatetime", function() { getCurrentUtcDatetime(); });
+}
 
 function getRandomNumberPlate() {
   var firstDigit = randomIntFromInterval(1, 7);
@@ -214,47 +217,48 @@ function isVisible(elementId) {
   return window.getComputedStyle(x).display !== "none";
 }
 
-function updatePunctuation(value) {
+function updateSetting(key, value) {
   try {
-    chrome.storage.sync.set({ 'punctuation': value }, function() {
-      console.log('Value is set to ' + value);
+    chrome.storage.sync.set({
+      [key]: value
     });
+  } catch (e) {
+    console.log(e);
   } finally {
-    var lmnt = document.getElementById("btn-settingPunctuation");
-
-    if (value) {
-      lmnt.classList.add("text-enabled");
-      lmnt.classList.remove("text-disabled");
-    } else {
-      lmnt.classList.add("text-disabled");
-      lmnt.classList.remove("text-enabled");
+    var lmnt = document.getElementById("btn-" + key);
+    if (lmnt) {
+      if (value) {
+        lmnt.classList.add("text-enabled");
+        lmnt.classList.remove("text-disabled");
+      } else {
+        lmnt.classList.add("text-disabled");
+        lmnt.classList.remove("text-enabled");
+      }
     }
 
-    document.getElementById("chk-settingPunctuation").checked = value;
+    document.getElementById("chk-" + key).checked = value;
   }
+}
+
+function updatePunctuation(value) {
+  updateSetting("settingPunctuation", value);
 }
 
 function updateDarkMode(value) {
-  try {
-    chrome.storage.sync.set({ 'darkMode': value }, function() {
-      console.log('Value is set to ' + value);
-    });
-  } finally {
-    value
-      ?
-      document.body.setAttribute("data-theme", "dark") :
-      document.body.removeAttribute("data-theme");
+  updateSetting("settingDarkMode", value);
 
-    document.getElementById("chk-settingDarkMode").checked = value;
-  }
+  value
+    ?
+    document.body.setAttribute("data-theme", "dark") :
+    document.body.removeAttribute("data-theme");
 }
 
 function getPunctuation() {
-  return storageCache.punctuation;
+  return storageCache.settingPunctuation || storageCache.punctuation; //Backward compatibility ; remove in a next release
 }
 
 function getDarkMode() {
-  return storageCache.darkMode;
+  return storageCache.settingDarkMode || storageCache.darkMode; //Backward compatibility ; remove in a next release
 }
 
 function togglePunctuation() {
@@ -267,14 +271,13 @@ function toggleDarkMode() {
 
 function loadStorageCache() {
   try {
-    chrome.storage.sync.get(['punctuation', 'darkMode'], function(result) {
+    chrome.storage.sync.get(['settingPunctuation', 'settingDarkMode'], function(result) {
       storageCache = result;
-      updatePunctuation(result.punctuation);
-      updateDarkMode(result.darkMode);
-      _gaq.push(['_setCustomVar', 1, 'DarkMode', getDarkMode() ? "dark" : "light", 1]); //TODO: This does not work ?? - debug needed
-      _gaq.push(['_trackEvent', 'Storage cache load', 'DarkMode ' + (result.darkMode ? "on" : "off")]);
+      updatePunctuation(result.settingPunctuation);
+      updateDarkMode(result.settingDarkMode);
+      _gaq.push(['_setCustomVar', 1, 'DarkMode', result.settingDarkMode ? "dark" : "light", 1]); //TODO: This does not work ?? - debug needed
+      _gaq.push(['_trackEvent', 'Storage cache load', 'DarkMode ' + (result.settingDarkMode ? "on" : "off")]);
     });
-
   } catch (e) {
 
   }
@@ -380,7 +383,7 @@ function trackButtonClick(e) {
   else if (e.target.id == "btn-settings") {
     _gaq.push(['_trackEvent', 'Settings', (isVisible("div-settings") ? "Open" : "Close") + " settings menu"]);
   } else if (e.target.id == "chk-settingDarkMode") {
-    _gaq.push(['_trackEvent', 'Settings', (getDarkMode() ? "Disable" : "Enable") + " darkMode"]);
+    _gaq.push(['_trackEvent', 'Settings', (getDarkMode() ? "Disable" : "Enable") + " dark mode"]);
   } else if (e.target.id == "chk-settingPunctuation") {
     _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via settings menu"]);
   } else if (e.target.id == "btn-settingPunctuation") {
