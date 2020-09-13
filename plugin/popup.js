@@ -1,30 +1,23 @@
 var storageCache = {};
 
 document.addEventListener('DOMContentLoaded', function() {
-  section = addGeneratorSection("sectionPeople");
-  addGenerator(section, "a-rrn", "nationalIdentificationNumber", function() { getRandomRrnNumber(); });
+  loadStorageCache();
 
-  section = addGeneratorSection("sectionCompanies");
-  addGenerator(section, "a-company", "companyNumber", function() { getRandomCompanyNumber(); });
-  addGenerator(section, "a-vat", "vatNumber", function() { getRandomVatNumber(); });
-  addGenerator(section, "a-establishmentunit", "establishmentUnitNumber", function() { getRandomEstablishmentUnitNumber(); });
-  addGenerator(section, "a-nsso", "nssoNumber", function() { getRandomNssoNumber(); });
-
-  section = addGeneratorSection("sectionOthers");
-  addGenerator(section, "a-numberplate", "numberPlate", function() { getRandomNumberPlate(); });
-  addGenerator(section, "a-iban", "iban", function() { getRandomIban(); });
-
-  section = addGeneratorSection("sectionUtilities");
-  addGenerator(section, "a-uuid", "uuid", function() { getNilUuid(); });
-  addGenerator(section, "a-uuidv4", "uuidv4", function() { getV4Uuid(); });
-  addGenerator(section, "a-datetime", "currentDatetime", function() { getCurrentUtcDatetime(); });
+  addGenerator("sectionPeople", "nationalIdentificationNumber", function() { getRandomRrnNumber(); });
+  addGenerator("sectionCompanies", "companyNumber", function() { getRandomCompanyNumber(); });
+  addGenerator("sectionCompanies", "vatNumber", function() { getRandomVatNumber(); });
+  addGenerator("sectionCompanies", "establishmentUnitNumber", function() { getRandomEstablishmentUnitNumber(); });
+  addGenerator("sectionCompanies", "nssoNumber", function() { getRandomNssoNumber(); });
+  addGenerator("sectionOthers", "numberPlate", function() { getRandomNumberPlate(); });
+  addGenerator("sectionOthers", "iban", function() { getRandomIban(); });
+  addGenerator("sectionUtilities", "uuid", function() { getNilUuid(); });
+  addGenerator("sectionUtilities", "uuidv4", function() { getV4Uuid(); });
+  addGenerator("sectionUtilities", "currentDatetime", function() { getCurrentUtcDatetime(); });
 
   initUiValue("title", "extensionname");
   initUiValue("div-status", "defaultStatus");
   initUiValue("lbl-punctuation", "settingPunctuation");
   initUiValue("lbl-darkMode", "settingDarkMode");
-
-  loadStorageCache();
 
   document.getElementById("btn-settings").addEventListener('click', function() { toggleDisplay("div-settings"); }, false);
   document.getElementById("btn-punctuation").addEventListener('click', function() { togglePunctuation(); }, false);
@@ -283,21 +276,24 @@ function loadStorageCache() {
 
 function addGeneratorSection(messageId) {
   var section = document.createElement('div');
+  section.id = messageId;
   document.getElementById('div-generators').appendChild(section);
 
   var header = document.createElement('div');
   header.className = 'list-group-item list-group-item-secondary list-group-header small font-weight-bold';
   header.innerHTML = chrome.i18n.getMessage(messageId);
-  section.appendChild(iDiv2);
+  section.appendChild(header);
 
   return section;
 }
 
-function addGenerator(menu, elementId, messageId, func) {
+function addGenerator(menuId, messageId, func) {
+  menu = document.getElementById(menuId) || addGeneratorSection(menuId);
+
   var lmnt = document.createElement('a');
   lmnt.href = '#';
   lmnt.className = 'list-group-item list-group-item-action list-group-compact generator';
-  lmnt.id = elementId;
+  lmnt.id = messageId;
   lmnt.innerHTML = chrome.i18n.getMessage(messageId);
   lmnt.addEventListener('click', func, false);
   lmnt.addEventListener('mouseout', function() { resetStatus(); }, false);
