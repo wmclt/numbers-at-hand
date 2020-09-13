@@ -12,29 +12,7 @@
 
 <body>
   <div class="list-group">
-
-    <!-- People -->
-    <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-people">People</div>
-    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-rrn">🇧🇪 National identification number</a>
-
-    <!-- Companies -->
-    <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-companies">Companies</div>
-    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-company">🇧🇪 Company number</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-vat">🇧🇪 VAT number</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-establishmentunit">🇧🇪 Establishment unit number</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-nsso">🇧🇪 NSSO number</a>
-
-    <!-- Others -->
-    <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-others">Others</div>
-    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-numberplate">🇧🇪 Number plate</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-iban">🇧🇪 IBAN</a>
-
-    <!-- Utilities -->
-    <div class="list-group-item list-group-item-secondary list-group-header small font-weight-bold" id="div-utilities">Utilities</div>
-    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-uuid">Nil UUID</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-uuidv4">V4 UUID</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-compact" id="a-datetime">Current UTC Datetime</a>
-
+    <div id="div-generators"></div>
     <!-- Status & settings -->
     <div class="list-group-item list-group-item-secondary list-group-compact font-italic" id="div-status">Click a number-type to generate it</div>
 
@@ -53,7 +31,6 @@
         </label>
       </div>
 
-      <!-- https://github.com/coliff/dark-mode-switch -->
       <div class="custom-control custom-switch">
         <input class="custom-control-input" type="checkbox" value="" id="chk-darkMode" />
         <label class="custom-control-label" for="chk-darkMode" id="lbl-darkMode">

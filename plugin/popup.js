@@ -1,32 +1,34 @@
 var storageCache = {};
 
 document.addEventListener('DOMContentLoaded', function() {
-  setupGeneratingButton("a-rrn", "nationalIdentificationNumber", function() { getRandomRrnNumber(); });
-  setupGeneratingButton("a-company", "companyNumber", function() { getRandomCompanyNumber(); });
-  setupGeneratingButton("a-vat", "vatNumber", function() { getRandomVatNumber(); });
-  setupGeneratingButton("a-establishmentunit", "establishmentUnitNumber", function() { getRandomEstablishmentUnitNumber(); });
-  setupGeneratingButton("a-nsso", "nssoNumber", function() { getRandomNssoNumber(); });
-  setupGeneratingButton("a-iban", "iban", function() { getRandomIban(); });
-  setupGeneratingButton("a-numberplate", "numberPlate", function() { getRandomNumberPlate(); });
+  section = addGeneratorSection("sectionPeople");
+  addGenerator(section, "a-rrn", "nationalIdentificationNumber", function() { getRandomRrnNumber(); });
 
-  setupGeneratingButton("a-uuid", "uuid", function() { getNilUuid(); });
-  setupGeneratingButton("a-uuidv4", "uuidv4", function() { getV4Uuid(); });
-  setupGeneratingButton("a-datetime", "currentDatetime", function() { getCurrentUtcDatetime(); });
+  section = addGeneratorSection("sectionCompanies");
+  addGenerator(section, "a-company", "companyNumber", function() { getRandomCompanyNumber(); });
+  addGenerator(section, "a-vat", "vatNumber", function() { getRandomVatNumber(); });
+  addGenerator(section, "a-establishmentunit", "establishmentUnitNumber", function() { getRandomEstablishmentUnitNumber(); });
+  addGenerator(section, "a-nsso", "nssoNumber", function() { getRandomNssoNumber(); });
+
+  section = addGeneratorSection("sectionOthers");
+  addGenerator(section, "a-numberplate", "numberPlate", function() { getRandomNumberPlate(); });
+  addGenerator(section, "a-iban", "iban", function() { getRandomIban(); });
+
+  section = addGeneratorSection("sectionUtilities");
+  addGenerator(section, "a-uuid", "uuid", function() { getNilUuid(); });
+  addGenerator(section, "a-uuidv4", "uuidv4", function() { getV4Uuid(); });
+  addGenerator(section, "a-datetime", "currentDatetime", function() { getCurrentUtcDatetime(); });
 
   initUiValue("title", "extensionname");
   initUiValue("div-status", "defaultStatus");
-  initUiValue("div-people", "sectionPeople");
-  initUiValue("div-companies", "sectionCompanies");
-  initUiValue("div-others", "sectionOthers");
-  initUiValue("div-utilities", "sectionUtilities");
   initUiValue("lbl-punctuation", "settingPunctuation");
   initUiValue("lbl-darkMode", "settingDarkMode");
 
   loadStorageCache();
 
   document.getElementById("btn-settings").addEventListener('click', function() { toggleDisplay("div-settings"); }, false);
-  document.getElementById("chk-punctuation").addEventListener('change', (event) => { updatePunctuation(event.target.checked); }, false);
   document.getElementById("btn-punctuation").addEventListener('click', function() { togglePunctuation(); }, false);
+  document.getElementById("chk-punctuation").addEventListener('change', (event) => { updatePunctuation(event.target.checked); }, false);
   document.getElementById("chk-darkMode").addEventListener('change', (event) => { updateDarkMode(event.target.checked); }, false);
 
   chrome.storage.onChanged.addListener(function(changes, namespace) {
@@ -279,12 +281,29 @@ function loadStorageCache() {
 
 // **************************** Setup functions ******************************
 
-function setupGeneratingButton(elementId, messageId, func) {
-  var lmnt = document.getElementById(elementId);
+function addGeneratorSection(messageId) {
+  var section = document.createElement('div');
+  document.getElementById('div-generators').appendChild(section);
+
+  var header = document.createElement('div');
+  header.className = 'list-group-item list-group-item-secondary list-group-header small font-weight-bold';
+  header.innerHTML = chrome.i18n.getMessage(messageId);
+  section.appendChild(iDiv2);
+
+  return section;
+}
+
+function addGenerator(menu, elementId, messageId, func) {
+  var lmnt = document.createElement('a');
+  lmnt.href = '#';
+  lmnt.className = 'list-group-item list-group-item-action list-group-compact generator';
+  lmnt.id = elementId;
+  lmnt.innerHTML = chrome.i18n.getMessage(messageId);
   lmnt.addEventListener('click', func, false);
   lmnt.addEventListener('mouseout', function() { resetStatus(); }, false);
-  initUiValue(elementId, messageId);
-  lmnt.classList.add("generator");
+
+  menu.appendChild(lmnt);
+  return lmnt;
 }
 
 function initUiValue(elementId, messageId) {
