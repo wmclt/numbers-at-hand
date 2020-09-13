@@ -16,13 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   initUiValue("title", "extensionname");
   initUiValue("div-status", "defaultStatus");
-  initUiValue("lbl-punctuation", "settingPunctuation");
-  initUiValue("lbl-darkMode", "settingDarkMode");
 
   document.getElementById("btn-settings").addEventListener('click', function() { toggleDisplay("div-settings"); }, false);
   document.getElementById("btn-punctuation").addEventListener('click', function() { togglePunctuation(); }, false);
-  document.getElementById("chk-punctuation").addEventListener('change', (event) => { updatePunctuation(event.target.checked); }, false);
-  document.getElementById("chk-darkMode").addEventListener('change', (event) => { updateDarkMode(event.target.checked); }, false);
+
+  addSettingSwitch("settingPunctuation", (event) => { updatePunctuation(event.target.checked); });
+  addSettingSwitch("settingDarkMode", (event) => { updateDarkMode(event.target.checked); });
 
   chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (var key in changes) {
@@ -300,6 +299,29 @@ function addGenerator(menuId, messageId, func) {
 
   menu.appendChild(lmnt);
   return lmnt;
+}
+
+function addSettingSwitch(messageId, func) {
+  var div = document.createElement('div');
+  div.className = 'custom-control custom-switch';
+  document.getElementById("div-settings").appendChild(div);
+
+  var input = document.createElement('input');
+  input.className = 'custom-control-input';
+  input.type = 'checkbox';
+  input.id = "chk-" + messageId;
+  input.value = "";
+  input.addEventListener('change', func, false);
+  div.appendChild(input);
+
+  var label = document.createElement('label');
+  label.className = 'custom-control-label';
+  label.htmlFor = "chk-" + messageId;
+  label.id = "lbl-" + messageId;
+  label.innerHTML = chrome.i18n.getMessage(messageId);
+  div.appendChild(label);
+
+  return div;
 }
 
 function initUiValue(elementId, messageId) {
