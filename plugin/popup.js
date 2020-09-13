@@ -215,6 +215,11 @@ function toggleDisplay(elementId) {
     lmnt.classList.add("d-none");
 }
 
+function isVisible(elementId) {
+  var x = document.getElementById(elementId);
+  return window.getComputedStyle(x).display !== "none";
+}
+
 function updatePunctuation(value) {
   chrome.storage.sync.set({ 'punctuation': value }, function() {
     console.log('Value is set to ' + value);
@@ -267,6 +272,8 @@ function loadStorageCache() {
     storageCache = result;
     updatePunctuation(result.punctuation);
     updateDarkMode(result.darkMode);
+    _gaq.push(['_setCustomVar', 1, 'DarkMode', getDarkMode() ? "dark" : "light", 1]); //TODO: This does not work ?? - debug needed
+    _gaq.push(['_trackEvent', 'Storage cache load', 'DarkMode ' + (result.darkMode ? "on" : "off")]);
   });
 }
 
@@ -290,7 +297,9 @@ function initUiValue(elementId, messageId) {
 
 // **************************** Google analytics ******************************
 
-var _AnalyticsCode = 'UA-177843535-1';
+function getAnalyticsCode() {
+  return isDevMode() ? 'UA-177843535-1' : 'UA-177843535-2';
+}
 
 /**
  * Below is a modified version of the Google Analytics asynchronous tracking
@@ -300,10 +309,8 @@ var _AnalyticsCode = 'UA-177843535-1';
  * a Google Analytics account.
  */
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', _AnalyticsCode]);
+_gaq.push(['_setAccount', getAnalyticsCode()]);
 _gaq.push(['_trackPageview']);
-_gaq.push(['_setCustomVar', 1, 'DarkMode', getDarkMode(), 1]);
-_gaq.push(['_setCustomVar', 2, 'DarkMode', getDarkMode(), 1]);
 
 (function() {
   var ga = document.createElement('script');
@@ -321,10 +328,22 @@ _gaq.push(['_setCustomVar', 2, 'DarkMode', getDarkMode(), 1]);
  */
 function trackButtonClick(e) {
   if (e.target.classList.contains("generator"))
-    _gaq.push(['_trackEvent', 'Number generation', e.target.innerText, "Punctuation " + (getPunctuation() ? "on" : "off"), ]);
-  else
+    _gaq.push(['_trackEvent', 'Number generation', e.target.id, e.target.innerText + " (punct:" + (getPunctuation() ? "Y)" : "N)"), getPunctuation() ?
+      1 : 0
+    ]);
+  else if (e.target.id == "btn-settings") {
+    _gaq.push(['_trackEvent', 'Settings', (isVisible("div-settings") ? "Open" : "Close") + " settings menu"]);
+  } else if (e.target.id == "chk-darkMode") {
+    _gaq.push(['_trackEvent', 'Settings', (getDarkMode() ? "Disable" : "Enable") + " darkMode"]);
+  } else if (e.target.id == "chk-punctuation") {
+    _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via settings menu"]);
+  } else if (e.target.id == "btn-punctuation") {
+    _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via onscreen button"]);
+  } else {
     _gaq.push(['_trackEvent', 'Unclassified', e.target.id, e.target.innerText]);
+  }
 }
+
 /**
  * Now set up your event handlers for the popup's `button` elements once the
  * popup's DOM has loaded.
@@ -393,4 +412,8 @@ if (String.prototype.splice === undefined) {
     return this.substring(0, calculatedOffset) +
       text + this.substring(calculatedOffset + removeCount);
   };
+}
+
+function isDevMode() {
+  return !('update_url' in chrome.runtime.getManifest());
 }
