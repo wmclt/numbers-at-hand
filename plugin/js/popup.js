@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initUiValue("div-status", "defaultStatus");
 
   document.getElementById("btn-settings").addEventListener('click', function() { toggleDisplay("div-settings"); }, false);
-  document.getElementById("btn-punctuation").addEventListener('click', function() { togglePunctuation(); }, false);
+  document.getElementById("btn-settingPunctuation").addEventListener('click', function() { togglePunctuation(); }, false);
 
   addSettingSwitch("settingPunctuation", (event) => { updatePunctuation(event.target.checked); });
   addSettingSwitch("settingDarkMode", (event) => { updateDarkMode(event.target.checked); });
@@ -187,7 +187,7 @@ function resetStatus(text) {
 function setStatus(text) {
   var str = "";
   try {
-    str = chrome.i18n.getMessage("copiedToClipboard", [text]);
+    str = geti18n("copiedToClipboard", [text]);
   } catch (err) {
     str = text + ' copied to clipboard';
   }
@@ -215,34 +215,38 @@ function isVisible(elementId) {
 }
 
 function updatePunctuation(value) {
-  chrome.storage.sync.set({ 'punctuation': value }, function() {
-    console.log('Value is set to ' + value);
-  });
+  try {
+    chrome.storage.sync.set({ 'punctuation': value }, function() {
+      console.log('Value is set to ' + value);
+    });
+  } finally {
+    var lmnt = document.getElementById("btn-settingPunctuation");
 
-  var lmnt = document.getElementById("btn-punctuation");
+    if (value) {
+      lmnt.classList.add("text-enabled");
+      lmnt.classList.remove("text-disabled");
+    } else {
+      lmnt.classList.add("text-disabled");
+      lmnt.classList.remove("text-enabled");
+    }
 
-  if (value) {
-    lmnt.classList.add("text-enabled");
-    lmnt.classList.remove("text-disabled");
-  } else {
-    lmnt.classList.add("text-disabled");
-    lmnt.classList.remove("text-enabled");
+    document.getElementById("chk-settingPunctuation").checked = value;
   }
-
-  document.getElementById("chk-punctuation").checked = value;
 }
 
 function updateDarkMode(value) {
-  chrome.storage.sync.set({ 'darkMode': value }, function() {
-    console.log('Value is set to ' + value);
-  });
+  try {
+    chrome.storage.sync.set({ 'darkMode': value }, function() {
+      console.log('Value is set to ' + value);
+    });
+  } finally {
+    value
+      ?
+      document.body.setAttribute("data-theme", "dark") :
+      document.body.removeAttribute("data-theme");
 
-  value
-    ?
-    document.body.setAttribute("data-theme", "dark") :
-    document.body.removeAttribute("data-theme");
-
-  document.getElementById("chk-darkMode").checked = value;
+    document.getElementById("chk-settingDarkMode").checked = value;
+  }
 }
 
 function getPunctuation() {
@@ -262,38 +266,43 @@ function toggleDarkMode() {
 }
 
 function loadStorageCache() {
-  chrome.storage.sync.get(['punctuation', 'darkMode'], function(result) {
-    storageCache = result;
-    updatePunctuation(result.punctuation);
-    updateDarkMode(result.darkMode);
-    _gaq.push(['_setCustomVar', 1, 'DarkMode', getDarkMode() ? "dark" : "light", 1]); //TODO: This does not work ?? - debug needed
-    _gaq.push(['_trackEvent', 'Storage cache load', 'DarkMode ' + (result.darkMode ? "on" : "off")]);
-  });
+  try {
+    chrome.storage.sync.get(['punctuation', 'darkMode'], function(result) {
+      storageCache = result;
+      updatePunctuation(result.punctuation);
+      updateDarkMode(result.darkMode);
+      _gaq.push(['_setCustomVar', 1, 'DarkMode', getDarkMode() ? "dark" : "light", 1]); //TODO: This does not work ?? - debug needed
+      _gaq.push(['_trackEvent', 'Storage cache load', 'DarkMode ' + (result.darkMode ? "on" : "off")]);
+    });
+
+  } catch (e) {
+
+  }
 }
 
 // **************************** Setup functions ******************************
 
 function addGeneratorSection(messageId) {
-  var section = document.createElement('div');
+  let section = document.createElement('div');
   section.id = messageId;
-  document.getElementById('div-generators').appendChild(section);
 
-  var header = document.createElement('div');
+  let header = document.createElement('div');
   header.className = 'list-group-item list-group-item-secondary list-group-header small font-weight-bold';
-  header.innerHTML = chrome.i18n.getMessage(messageId);
+  header.innerHTML = geti18n(messageId);
   section.appendChild(header);
 
+  document.getElementById('div-generators').appendChild(section);
   return section;
 }
 
 function addGenerator(menuId, messageId, func) {
-  menu = document.getElementById(menuId) || addGeneratorSection(menuId);
+  let menu = document.getElementById(menuId) || addGeneratorSection(menuId);
 
-  var lmnt = document.createElement('a');
+  let lmnt = document.createElement('a');
   lmnt.href = '#';
   lmnt.className = 'list-group-item list-group-item-action list-group-compact generator';
   lmnt.id = messageId;
-  lmnt.innerHTML = chrome.i18n.getMessage(messageId);
+  lmnt.innerHTML = geti18n(messageId);
   lmnt.addEventListener('click', func, false);
   lmnt.addEventListener('mouseout', function() { resetStatus(); }, false);
 
@@ -302,11 +311,10 @@ function addGenerator(menuId, messageId, func) {
 }
 
 function addSettingSwitch(messageId, func) {
-  var div = document.createElement('div');
+  let div = document.createElement('div');
   div.className = 'custom-control custom-switch';
-  document.getElementById("div-settings").appendChild(div);
 
-  var input = document.createElement('input');
+  let input = document.createElement('input');
   input.className = 'custom-control-input';
   input.type = 'checkbox';
   input.id = "chk-" + messageId;
@@ -314,19 +322,20 @@ function addSettingSwitch(messageId, func) {
   input.addEventListener('change', func, false);
   div.appendChild(input);
 
-  var label = document.createElement('label');
+  let label = document.createElement('label');
   label.className = 'custom-control-label';
   label.htmlFor = "chk-" + messageId;
   label.id = "lbl-" + messageId;
-  label.innerHTML = chrome.i18n.getMessage(messageId);
+  label.innerHTML = geti18n(messageId);
   div.appendChild(label);
 
+  document.getElementById("div-settings").appendChild(div);
   return div;
 }
 
 function initUiValue(elementId, messageId) {
   try {
-    document.getElementById(elementId).innerHTML = chrome.i18n.getMessage(messageId);
+    document.getElementById(elementId).innerHTML = geti18n(messageId);
   } catch (err) {
     ; //[Uncaught TypeError: Cannot read property 'getMessage' of undefined] if webpage loaded directly
   }
@@ -370,11 +379,11 @@ function trackButtonClick(e) {
     ]);
   else if (e.target.id == "btn-settings") {
     _gaq.push(['_trackEvent', 'Settings', (isVisible("div-settings") ? "Open" : "Close") + " settings menu"]);
-  } else if (e.target.id == "chk-darkMode") {
+  } else if (e.target.id == "chk-settingDarkMode") {
     _gaq.push(['_trackEvent', 'Settings', (getDarkMode() ? "Disable" : "Enable") + " darkMode"]);
-  } else if (e.target.id == "chk-punctuation") {
+  } else if (e.target.id == "chk-settingPunctuation") {
     _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via settings menu"]);
-  } else if (e.target.id == "btn-punctuation") {
+  } else if (e.target.id == "btn-settingPunctuation") {
     _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via onscreen button"]);
   } else {
     _gaq.push(['_trackEvent', 'Unclassified', e.target.id, e.target.innerText]);
@@ -451,6 +460,18 @@ if (String.prototype.splice === undefined) {
   };
 }
 
+function geti18n(messageId, content) {
+  try {
+    return chrome.i18n.getMessage(messageId, [content]);
+  } catch (e) {
+    if (typeof content !== 'undefined')
+      return content + " " + messageId;
+    else return messageId;
+  }
+}
+
 function isDevMode() {
-  return !('update_url' in chrome.runtime.getManifest());
+  try {
+    return !('update_url' in chrome.runtime.getManifest());
+  } catch (e) { return true; }
 }
