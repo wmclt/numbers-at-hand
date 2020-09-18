@@ -53,7 +53,7 @@ function getRandomNumberPlate() {
 }
 
 function getRandomEstablishmentUnitNumber() {
-  var firstDigit = randomIntFromInterval(2, 8);
+  var firstDigit = randomIntFromInterval(2, 7);
   var nextDigits = randomIntFromInterval(0, 9999999);
 
   var base = (firstDigit * 10000000) + nextDigits;
