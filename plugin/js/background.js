@@ -6,7 +6,7 @@ function onClickHandler(info, tab) {
   var value = info.menuItemId == "uuidv4" ? generateUUID() :
     info.menuItemId == "establishmentUnitNumber" ? generateEstablishmentUnitNumber() : "undefined";
 
-
+  //TODO:       _gaq.push(['_trackEvent', )]); for context-menu usage
   //https://stackoverflow.com/questions/28055887/is-there-a-flexible-way-to-modify-the-contents-of-an-editable-element
   chrome.tabs.executeScript(tab.id, {
     code: 'var l = document.activeElement; var content = "' + value +

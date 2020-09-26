@@ -1,7 +1,7 @@
 // var storageCache = {};
 
 document.addEventListener('DOMContentLoaded', function() {
-  loadStorageCache(); //TODO: initialize cache correctly in background.js
+  loadStorageCacheUI();
 
   addGenerators();
 
@@ -271,7 +271,7 @@ function toggleDarkMode() {
   updateDarkMode(!getDarkMode());
 }
 
-function loadStorageCache() {
+function loadStorageCacheUI() {
   try {
     chrome.storage.sync.get(['settingPunctuation', 'settingDarkMode'], function(result) {
       storageCache = result;

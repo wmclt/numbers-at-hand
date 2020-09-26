@@ -1,14 +1,12 @@
 var storageCache = {};
 
-document.addEventListener('DOMContentLoaded', function() {
+loadStorageCacheBackend();
 
-  chrome.storage.onChanged.addListener(function(changes, namespace) {
-    for (var key in changes) {
-      storageCache[key] = changes[key].newValue;
-    }
-  });
-
-}, false);
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (var key in changes) {
+    storageCache[key] = changes[key].newValue;
+  }
+});
 
 
 //https://stackoverflow.com/questions/105034/how-to-create-guid-uuid
@@ -103,4 +101,13 @@ if (String.prototype.splice === undefined) {
     return this.substring(0, calculatedOffset) +
       text + this.substring(calculatedOffset + removeCount);
   };
+}
+
+
+function loadStorageCacheBackend() {
+  try {
+    chrome.storage.sync.get(['settingPunctuation', 'settingDarkMode'], function(result) {
+      storageCache = result;
+    });
+  } catch (e) {}
 }
