@@ -2,11 +2,13 @@ var storageCache = {};
 
 loadStorageCacheBackend();
 
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-  for (var key in changes) {
-    storageCache[key] = changes[key].newValue;
-  }
-});
+try {
+  chrome.storage.onChanged.addListener(function(changes, namespace) {
+    for (var key in changes) {
+      storageCache[key] = changes[key].newValue;
+    }
+  });
+} catch (e) {}
 
 var generators = [
   ["sectionPeople", "nationalIdentificationNumber", generateRandomRrnNumber],
@@ -16,14 +18,13 @@ var generators = [
   ["sectionCompanies", "nssoNumber", generateRandomNssoNumber],
   ["sectionOthers", "numberPlate", generateRandomNumberPlate],
   ["sectionOthers", "iban", generateRandomIban],
-  ["sectionUtilities", "uuid", generateNilUuid],
-  ["sectionUtilities", "uuidv4", generateRandomUuid],
-  ["sectionUtilities", "currentDatetime", generateCurrentUtcDatetime]
+  ["sectionUtilities", "nilUuid", generateNilUuid],
+  ["sectionUtilities", "v4Uuid", generateRandomV4Uuid],
+  ["sectionUtilities", "currentUtcDatetime", generateCurrentUtcDatetime]
 ];
 
-
 //https://stackoverflow.com/questions/105034/how-to-create-guid-uuid
-function generateRandomUuid() { // Public Domain/MIT
+function generateRandomV4Uuid() { // Public Domain/MIT
   var d = new Date().getTime(); //Timestamp
   var d2 = (performance && performance.now && (performance.now() * 1000)) || 0; //Time in microseconds since page-load or 0 if unsupported
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -153,11 +154,9 @@ function copy(text) {
   return result;
 }
 
-
 function getPunctuation() {
   return storageCache.settingPunctuation || storageCache.punctuation; //Backward compatibility ; remove in a next release
 }
-
 
 function modulo(divident, divisor) {
   var cDivident = '';
@@ -202,11 +201,48 @@ if (String.prototype.splice === undefined) {
   };
 }
 
-
 function loadStorageCacheBackend() {
   try {
     chrome.storage.sync.get(['settingPunctuation', 'settingDarkMode'], function(result) {
       storageCache = result;
     });
   } catch (e) {}
+}
+
+// **************************** Google analytics ******************************
+
+function getAnalyticsCode() {
+  return isDevMode() ? 'UA-177843535-1' : 'UA-177843535-2';
+}
+
+/**
+ * Below is a modified version of the Google Analytics asynchronous tracking
+ * code snippet.  It has been modified to pull the HTTPS version of ga.js
+ * instead of the default HTTP version.  It is recommended that you use this
+ * snippet instead of the standard tracking snippet provided when setting up
+ * a Google Analytics account.
+ */
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', getAnalyticsCode()]);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script');
+  ga.type = 'text/javascript';
+  ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(ga, s);
+})();
+
+function isDevMode() {
+  try {
+    return !('update_url' in chrome.runtime.getManifest());
+  } catch (e) { return true; }
+}
+
+function logGeneratorUsage(generatorId, label, source) {
+  _gaq.push(['_trackEvent', 'Number generation', generatorId, label + " (punct:" + (getPunctuation() ? "Y" : "N") + ",src=" + source + ")",
+    getPunctuation() ? 1 : 0
+  ]);
 }

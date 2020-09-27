@@ -1,38 +1,29 @@
-// The onClicked callback function.
 function onClickHandler(info, tab) {
-  // console.log("item " + info.menuItemId + " was clicked");
-  // console.log("info: " + JSON.stringify(info));
-  // console.log("tab: " + JSON.stringify(tab));
-  var value = info.menuItemId == "uuidv4" ? generateUUID() :
-    info.menuItemId == "establishmentUnitNumber" ? generateEstablishmentUnitNumber() : "undefined";
+  var g = generators.filter(x => x[1] == info.menuItemId)[0][2];
 
-  //TODO:       _gaq.push(['_trackEvent', )]); for context-menu usage
   //https://stackoverflow.com/questions/28055887/is-there-a-flexible-way-to-modify-the-contents-of-an-editable-element
   chrome.tabs.executeScript(tab.id, {
-    code: 'var l = document.activeElement; var content = "' + value +
-      '"; l.value = l.value.slice(0, l.selectionStart) + content + l.value.substr(l.selectionEnd); l.selectionStart = l.selectionStart + content.length; l.selectionEnd = l.selectionStart;',
+    code: 'var l = document.activeElement; var content = "' + g() +
+      '";var s = l.selectionStart; l.value = l.value.slice(0, l.selectionStart) + content + l.value.substr(l.selectionEnd); l.selectionStart = s + content.length; l.selectionEnd = l.selectionStart;',
     frameId: info.frameId
-  }); //TODO: debug selectionStart + selectionEnd
+  });
+
+  logGeneratorUsage(info.menuItemId, chrome.i18n.getMessage(info.menuItemId), "context");
 };
 
 var parentId = chrome.contextMenus.create({
-  "title": "Numbers at hand",
+  "title": chrome.i18n.getMessage("extensionname"),
   "contexts": ["editable"],
   "id": "parent"
 });
 
-chrome.contextMenus.create({
-  "title": chrome.i18n.getMessage("uuidv4"),
-  "contexts": ["editable"],
-  "id": "uuidv4",
-  "parentId": parentId
-});
-
-chrome.contextMenus.create({
-  "title": chrome.i18n.getMessage("establishmentUnitNumber"),
-  "contexts": ["editable"],
-  "id": "establishmentUnitNumber",
-  "parentId": parentId
-});
+for (var i = 0; i < generators.length; i++) {
+  chrome.contextMenus.create({
+    "title": chrome.i18n.getMessage(generators[i][1]),
+    "contexts": ["editable"],
+    "id": generators[i][1],
+    "parentId": parentId
+  });
+}
 
 chrome.contextMenus.onClicked.addListener(onClickHandler);

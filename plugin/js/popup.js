@@ -17,13 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
 // **************************** Link generators *****************************
 function addGenerators() {
   //https://stackoverflow.com/questions/256754/how-to-pass-arguments-to-addeventlistener-listener-function
-  for (var i = 0; i < generators.length; i++) {
-    addGenerator(generators[i][0], generators[i][1], function(x) { return function() { processGenerationRequest(x) }; }(generators[i][2]));
-  }
+  generators.forEach(function(g) {
+    addGenerator(g[0], g[1], function(x) { return function() { processGenerationRequest(x) }; }(g[2]));
+  });
 }
 
-function processGenerationRequest(generatorId) {
-  var nr = generatorId(); //generators[generatorId][2]();
+function processGenerationRequest(generator) {
+  var nr = generator();
   copy(nr);
   setStatus(nr);
 }
@@ -55,9 +55,8 @@ function setStatus(text) {
 function toggleDisplay(elementId) {
   var lmnt = document.getElementById(elementId);
 
-  if (lmnt.classList.contains("d-none"))
-    lmnt.classList.remove("d-none");
-  else
+  lmnt.classList.contains("d-none") ?
+    lmnt.classList.remove("d-none") :
     lmnt.classList.add("d-none");
 }
 
@@ -101,10 +100,6 @@ function updateDarkMode(value) {
     document.body.setAttribute("data-theme", "dark") :
     document.body.removeAttribute("data-theme");
 }
-//
-// function getPunctuation() {
-//   return storageCache.settingPunctuation || storageCache.punctuation; //Backward compatibility ; remove in a next release
-// }
 
 function getDarkMode() {
   return storageCache.settingDarkMode || storageCache.darkMode; //Backward compatibility ; remove in a next release
@@ -195,41 +190,9 @@ function initUiValue(elementId, messageId) {
 
 // **************************** Google analytics ******************************
 
-function getAnalyticsCode() {
-  return isDevMode() ? 'UA-177843535-1' : 'UA-177843535-2';
-}
-
-/**
- * Below is a modified version of the Google Analytics asynchronous tracking
- * code snippet.  It has been modified to pull the HTTPS version of ga.js
- * instead of the default HTTP version.  It is recommended that you use this
- * snippet instead of the standard tracking snippet provided when setting up
- * a Google Analytics account.
- */
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', getAnalyticsCode()]);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script');
-  ga.type = 'text/javascript';
-  ga.async = true;
-  ga.src = 'https://ssl.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(ga, s);
-})();
-/**
- * Track a click on a button using the asynchronous tracking API.
- *
- * See http://code.google.com/apis/analytics/docs/tracking/asyncTracking.html
- * for information on how to use the asynchronous tracking API.
- */
 function trackButtonClick(e) {
   if (e.target.classList.contains("generator"))
-    _gaq.push(['_trackEvent', 'Number generation', e.target.id, e.target.innerText + " (punct:" + (getPunctuation() ? "Y)" : "N)"),
-      getPunctuation() ?
-      1 : 0
-    ]);
+    logGeneratorUsage(e.target.id, e.target.innerText, "popup");
   else if (e.target.id == "btn-settings") {
     _gaq.push(['_trackEvent', 'Settings', (isVisible("div-settings") ? "Open" : "Close") + " settings menu"]);
   } else if (e.target.id == "chk-settingDarkMode") {
@@ -243,75 +206,14 @@ function trackButtonClick(e) {
   }
 }
 
-/**
- * Now set up your event handlers for the popup's `button` elements once the
- * popup's DOM has loaded.
- */
 document.addEventListener('DOMContentLoaded', function() {
-  var buttons = document.querySelectorAll('a,input,li'); //TODO: use class to mark trackable items?
+  var buttons = document.querySelectorAll('a,input,li');
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', trackButtonClick);
   }
 });
 
 // **************************** Helper functions ******************************
-
-// function randomIntFromInterval(min, max) { // min and max included
-//   return Math.floor(Math.random() * (max - min + 1) + min);
-// }
-//
-// function copy(text) {
-//   var input = document.createElement('input');
-//   input.setAttribute('value', text);
-//   document.body.appendChild(input);
-//   input.select();
-//   var result = document.execCommand('copy');
-//   document.body.removeChild(input);
-//   return result;
-// }
-//
-// function modulo(divident, divisor) {
-//   var cDivident = '';
-//   var cRest = '';
-//
-//   for (var i in divident) {
-//     if (i == "splice")
-//       break;
-//
-//     var cChar = divident[i];
-//     var cOperator = cRest + '' + cDivident + '' + cChar;
-//
-//     if (cOperator < parseInt(divisor)) {
-//       cDivident += '' + cChar;
-//     } else {
-//       cRest = cOperator % divisor;
-//       if (cRest == 0) {
-//         cRest = '';
-//       }
-//       cDivident = '';
-//     }
-//   }
-//   cRest += '' + cDivident;
-//   if (cRest == '') {
-//     cRest = 0;
-//   }
-//   return cRest;
-// }
-//
-// if (String.prototype.splice === undefined) {
-//   /**
-//    * Splices text within a string.
-//    * @param {int} offset The position to insert the text at (before)
-//    * @param {string} text The text to insert
-//    * @param {int} [removeCount=0] An optional number of characters to overwrite
-//    * @returns {string} A modified string containing the spliced text.
-//    */
-//   String.prototype.splice = function(offset, text, removeCount = 0) {
-//     let calculatedOffset = offset < 0 ? this.length + offset : offset;
-//     return this.substring(0, calculatedOffset) +
-//       text + this.substring(calculatedOffset + removeCount);
-//   };
-// }
 
 function geti18n(messageId, content) {
   try {
@@ -321,10 +223,4 @@ function geti18n(messageId, content) {
       return content + " " + messageId;
     else return messageId;
   }
-}
-
-function isDevMode() {
-  try {
-    return !('update_url' in chrome.runtime.getManifest());
-  } catch (e) { return true; }
 }

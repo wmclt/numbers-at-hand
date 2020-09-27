@@ -8,7 +8,7 @@
 	"extensionhovertext": {
 		"message": "Numbers at hand"
 	},
-	"uuid": {
+	"nilUuid": {
 		"message": "UUID gol"
 	},
 	"nationalIdentificationNumber": {
@@ -39,7 +39,7 @@
           }
         }
 	},
-	"currentDatetime": {
+	"currentUtcDatetime": {
 		"message": "Data curentă UTC"
 	},
 	"establishmentUnitNumber": {
