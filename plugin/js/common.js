@@ -9,6 +9,20 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 });
 
 
+var generators = [
+  ["sectionPeople", "nationalIdentificationNumber", function() { getRandomRrnNumber(); }],
+  ["sectionCompanies", "companyNumber", function() { getRandomCompanyNumber(); }],
+  ["sectionCompanies", "vatNumber", function() { getRandomVatNumber(); }],
+  ["sectionCompanies", "establishmentUnitNumber", function() { getRandomEstablishmentUnitNumber(); }],
+  ["sectionCompanies", "nssoNumber", function() { getRandomNssoNumber(); }],
+  ["sectionOthers", "numberPlate", function() { getRandomNumberPlate(); }],
+  ["sectionOthers", "iban", function() { getRandomIban(); }],
+  ["sectionUtilities", "uuid", function() { getNilUuid(); }],
+  ["sectionUtilities", "uuidv4", function() { getV4Uuid(); }],
+  ["sectionUtilities", "currentDatetime", function() { getCurrentUtcDatetime(); }]
+];
+
+
 //https://stackoverflow.com/questions/105034/how-to-create-guid-uuid
 function generateUUID() { // Public Domain/MIT
   var d = new Date().getTime(); //Timestamp

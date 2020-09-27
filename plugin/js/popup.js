@@ -24,16 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // **************************** Core functionality *****************************
 function addGenerators() {
-  addGenerator("sectionPeople", "nationalIdentificationNumber", function() { getRandomRrnNumber(); });
-  addGenerator("sectionCompanies", "companyNumber", function() { getRandomCompanyNumber(); });
-  addGenerator("sectionCompanies", "vatNumber", function() { getRandomVatNumber(); });
-  addGenerator("sectionCompanies", "establishmentUnitNumber", function() { getRandomEstablishmentUnitNumber(); });
-  addGenerator("sectionCompanies", "nssoNumber", function() { getRandomNssoNumber(); });
-  addGenerator("sectionOthers", "numberPlate", function() { getRandomNumberPlate(); });
-  addGenerator("sectionOthers", "iban", function() { getRandomIban(); });
-  addGenerator("sectionUtilities", "uuid", function() { getNilUuid(); });
-  addGenerator("sectionUtilities", "uuidv4", function() { getV4Uuid(); });
-  addGenerator("sectionUtilities", "currentDatetime", function() { getCurrentUtcDatetime(); });
+  for (var i = 0; i < generators.length; i++) {
+    addGenerator(generators[i][0], generators[i][1], generators[i][2]);
+  }
+}
+
+function processGenerationRequest(generator) {
+  var nr = generator();
+  copy(nr);
+  setStatus(nr);
 }
 
 function getRandomNumberPlate() {
