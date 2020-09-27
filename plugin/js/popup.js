@@ -37,148 +37,68 @@ function addGenerators() {
 }
 
 function getRandomNumberPlate() {
-  var firstDigit = randomIntFromInterval(1, 7);
-  var firstChar = String.fromCharCode(randomIntFromInterval(65, 90));
-  var secondChar = String.fromCharCode(randomIntFromInterval(65, 90));
-  var thirdChar = String.fromCharCode(randomIntFromInterval(65, 90));
-  var nextDigits = randomIntFromInterval(0, 999);
-
-  var numberPlate = ''.concat(firstDigit).concat(firstChar).concat(secondChar).concat(thirdChar).concat(''.concat(nextDigits).padStart(3, "0"));
-
-  if (getPunctuation())
-    numberPlate = numberPlate.splice(4, "-").splice(1, "-");
-
-  copy(numberPlate);
-  setStatus(numberPlate);
+  var nr = generateNumberPlate();
+  copy(nr);
+  setStatus(nr);
 }
 
 function getRandomEstablishmentUnitNumber() {
-  var establishmentUnitNumber = generateEstablishmentUnitNumber();
-  // var firstDigit = randomIntFromInterval(2, 7);
-  // var nextDigits = randomIntFromInterval(0, 9999999);
-  //
-  // var base = (firstDigit * 10000000) + nextDigits;
-  // var checksum = (97 - base % 97);
-  // var establishmentUnitNumber = ''.concat(100 * base + checksum);
-  //
-  // if (getPunctuation())
-  //   establishmentUnitNumber = establishmentUnitNumber.splice(7, ".").splice(4, ".").splice(1, ".");
-
-  copy(establishmentUnitNumber);
-  setStatus(establishmentUnitNumber);
+  var nr = generateEstablishmentUnitNumber();
+  copy(nr);
+  setStatus(nr);
 }
 
-
 function getNilUuid() {
-  var uuid = "00000000-0000-0000-0000-000000000000";
-  copy(uuid);
-  setStatus(uuid);
+  var nr = generateNilUuid();
+  copy(nr);
+  setStatus(nr);
 }
 
 function getV4Uuid() {
-  var uuid = generateUUID();
-  copy(uuid);
-  setStatus(uuid);
+  var nr = generateUUID();
+  copy(nr);
+  setStatus(nr);
 }
-
-// //https://stackoverflow.com/questions/105034/how-to-create-guid-uuid
-// function generateUUID() { // Public Domain/MIT
-//   var d = new Date().getTime(); //Timestamp
-//   var d2 = (performance && performance.now && (performance.now() * 1000)) || 0; //Time in microseconds since page-load or 0 if unsupported
-//   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-//     var r = Math.random() * 16; //random number between 0 and 16
-//     if (d > 0) { //Use timestamp until depleted
-//       r = (d + r) % 16 | 0;
-//       d = Math.floor(d / 16);
-//     } else { //Use microseconds since page-load if supported
-//       r = (d2 + r) % 16 | 0;
-//       d2 = Math.floor(d2 / 16);
-//     }
-//     return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-//   });
-// }
 
 function getRandomNssoNumber() {
-  var base = randomIntFromInterval(1000, 1999999);
-  var control = 96 - (100 * base) % 97;
-  var nssonbr = ''.concat(100 * base + control).padStart(9, "0");
+  var nr = generateNssoNumber();
 
-  if (getPunctuation())
-    nssonbr = nssonbr.splice(7, "-");
-
-  copy(nssonbr);
-  setStatus(nssonbr);
-}
-
-function generateRandomCompanyNumber() {
-  var base = randomIntFromInterval(2000000, 19999999);
-  var control = 97 - base % 97;
-  var companynbr = ''.concat(100 * base + control).padStart(10, "0");
-
-  if (getPunctuation())
-    companynbr = companynbr.splice(7, ".").splice(4, ".");
-
-  return companynbr;
+  copy(nr);
+  setStatus(nr);
 }
 
 function getRandomCompanyNumber() {
-  companynbr = generateRandomCompanyNumber();
+  var nr = generateRandomCompanyNumber();
 
-  copy(companynbr);
-  setStatus(companynbr);
+  copy(nr);
+  setStatus(nr);
 }
 
 function getRandomVatNumber() {
-  var vat = "";
-  var companyNbr = generateRandomCompanyNumber();
+  var nr = generateRandomVatNumber();
 
-  if (getPunctuation())
-    vat = "BTW BE ".concat(companyNbr);
-  else
-    vat = "BE".concat(companyNbr);
-
-  copy(vat);
-  setStatus(vat);
+  copy(nr);
+  setStatus(nr);
 }
 
 function getRandomRrnNumber() {
-  var year = randomIntFromInterval(1920, 2019);
-  var month = randomIntFromInterval(1, 12);
-  var day = randomIntFromInterval(1, 28);
-  var counter = randomIntFromInterval(1, 999);
+  var nr = generateRandomRrnNumber();
 
-  var base = ((year % 100) * 10000000) + (month * 100000) + (day * 1000) + (counter);
-  var checksum = year >= 2000 ? (97 - (base + 2000000000) % 97) : (97 - base % 97);
-  var rrn = ''.concat(100 * base + checksum).padStart(11, "0");
-
-  if (getPunctuation())
-    rrn = rrn.splice(6, "-").splice(4, ".").splice(2, ".").splice(12, ".");
-
-  copy(rrn);
-  setStatus(rrn);
+  copy(nr);
+  setStatus(nr);
 }
 
 function getRandomIban() {
-  var country = "BE";
-  var bankcode = randomIntFromInterval(0, 999); //https://www.nbb.be/en/payments-and-securities/payment-standards/bank-identification-codes
-  var accountNbr = randomIntFromInterval(0, 9999999);
+  var nr = generateRandomIban();
 
-  var nationalCheck = (10000000 * bankcode + accountNbr) % 97 == 0 ? 97 : (10000000 * bankcode + accountNbr) % 97;
-  var checksum = 98 - modulo('' + (1000000000000000 * bankcode + 100000000 * accountNbr + nationalCheck * 1000000 + 111400), '' + 97);
-  var iban = country.concat(''.concat(1000000000000 * checksum + 1000000000 * bankcode + 100 * accountNbr + nationalCheck).padStart(14, "0"));
-
-  if (getPunctuation())
-    iban = iban.splice(12, " ").splice(8, " ").splice(4, " ");
-
-  copy(iban);
-  setStatus(iban);
+  copy(nr);
+  setStatus(nr);
 }
 
 function getCurrentUtcDatetime() {
-  var datetime = new Date().toISOString();
-
-  copy(datetime);
-  setStatus(datetime);
+  var nr = generateCurrentUtcDatetime();
+  copy(nr);
+  setStatus(nr);
 }
 
 // **************************** Status functions ******************************
