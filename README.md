@@ -5,7 +5,7 @@ Suggested use case: generate randomized test-data that passes validation checks.
 ## Functionality
 Generate randomized valid Belgian numbers for these types:
 * National Identification Number _(Rijksregisternummer / Numéro du Registre national / Nationalversicherungsnummer)_
-* Company number _(Ondernemingsnummer / Numéro d'entreprise / Unternehmensnummer)_
+* Enterprise number _(Ondernemingsnummer / Numéro d'entreprise / Unternehmensnummer)_
 * VAT number _(BTW-nummer / Numéro de TVA / Umsatzsteuer-Identifikationsnummer)_
 * Establishment unit number _(Vestigingseenheidsnummer / Numéro d’unité d’établissement / Niederlassungseinheitsnummer)_
 * NSSO number _(RSZ-nummer / Numéro ONSS / LSS-Nummer)_
