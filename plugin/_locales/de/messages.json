@@ -8,7 +8,7 @@
 	"extensionhovertext": {
 		"message": "Numbers at hand"
 	},
-	"uuid": {
+	"nilUuid": {
 		"message": "Leere UUID"
 	},
 	"nationalIdentificationNumber": {
@@ -39,7 +39,7 @@
           }
         }
 	},
-	"currentDatetime": {
+	"currentUtcDatetime": {
 		"message": "Aktuelle UTC-Datumszeit"
 	},
 	"establishmentUnitNumber": {
