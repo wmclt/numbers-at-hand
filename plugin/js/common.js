@@ -45,12 +45,8 @@ function generateNilUuid() { return "00000000-0000-0000-0000-000000000000"; }
 function generateRandomNssoNumber() {
   var base = randomIntFromInterval(1000, 1999999);
   var control = 96 - (100 * base) % 97;
-  var nssonbr = ''.concat(100 * base + control).padStart(9, "0");
 
-  if (getPunctuation())
-    nssonbr = nssonbr.splice(7, "-");
-
-  return nssonbr;
+  return "bbbbbbb-cc".punctuate().fillin("b", base).fillin("c", control);
 }
 
 function generateRandomCompanyNumber() {
@@ -198,6 +194,25 @@ if (String.prototype.splice === undefined) {
     let calculatedOffset = offset < 0 ? this.length + offset : offset;
     return this.substring(0, calculatedOffset) +
       text + this.substring(calculatedOffset + removeCount);
+  };
+}
+
+
+if (String.prototype.fillin === undefined) {
+  String.prototype.fillin = function(c, val, pad = "0") {
+    var start = this.indexOf(c);
+    var end = this.lastIndexOf(c) + 1;
+    var length = end - start;
+
+    return this.substring(0, start) + ("" + val).padStart(length, pad) + this.substring(end);
+  };
+}
+
+if (String.prototype.punctuate === undefined) {
+  String.prototype.punctuate = function() {
+    if (getPunctuation())
+      return this;
+    return this.replace(/[^a-z]/g, '');
   };
 }
 
