@@ -8,23 +8,22 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
   }
 });
 
-
 var generators = [
-  ["sectionPeople", "nationalIdentificationNumber", function() { getRandomRrnNumber(); }],
-  ["sectionCompanies", "companyNumber", function() { getRandomCompanyNumber(); }],
-  ["sectionCompanies", "vatNumber", function() { getRandomVatNumber(); }],
-  ["sectionCompanies", "establishmentUnitNumber", function() { getRandomEstablishmentUnitNumber(); }],
-  ["sectionCompanies", "nssoNumber", function() { getRandomNssoNumber(); }],
-  ["sectionOthers", "numberPlate", function() { getRandomNumberPlate(); }],
-  ["sectionOthers", "iban", function() { getRandomIban(); }],
-  ["sectionUtilities", "uuid", function() { getNilUuid(); }],
-  ["sectionUtilities", "uuidv4", function() { getV4Uuid(); }],
-  ["sectionUtilities", "currentDatetime", function() { getCurrentUtcDatetime(); }]
+  ["sectionPeople", "nationalIdentificationNumber", generateRandomRrnNumber],
+  ["sectionCompanies", "companyNumber", generateRandomCompanyNumber],
+  ["sectionCompanies", "vatNumber", generateRandomVatNumber],
+  ["sectionCompanies", "establishmentUnitNumber", generateRandomEstablishmentUnitNumber],
+  ["sectionCompanies", "nssoNumber", generateRandomNssoNumber],
+  ["sectionOthers", "numberPlate", generateRandomNumberPlate],
+  ["sectionOthers", "iban", generateRandomIban],
+  ["sectionUtilities", "uuid", generateNilUuid],
+  ["sectionUtilities", "uuidv4", generateRandomUuid],
+  ["sectionUtilities", "currentDatetime", generateCurrentUtcDatetime]
 ];
 
 
 //https://stackoverflow.com/questions/105034/how-to-create-guid-uuid
-function generateUUID() { // Public Domain/MIT
+function generateRandomUuid() { // Public Domain/MIT
   var d = new Date().getTime(); //Timestamp
   var d2 = (performance && performance.now && (performance.now() * 1000)) || 0; //Time in microseconds since page-load or 0 if unsupported
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -42,7 +41,7 @@ function generateUUID() { // Public Domain/MIT
 
 function generateNilUuid() { return "00000000-0000-0000-0000-000000000000"; }
 
-function generateNssoNumber() {
+function generateRandomNssoNumber() {
   var base = randomIntFromInterval(1000, 1999999);
   var control = 96 - (100 * base) % 97;
   var nssonbr = ''.concat(100 * base + control).padStart(9, "0");
@@ -107,7 +106,7 @@ function generateRandomIban() {
   return iban;
 }
 
-function generateNumberPlate() {
+function generateRandomNumberPlate() {
   var firstDigit = randomIntFromInterval(1, 7);
   var firstChar = String.fromCharCode(randomIntFromInterval(65, 90));
   var secondChar = String.fromCharCode(randomIntFromInterval(65, 90));
@@ -122,7 +121,7 @@ function generateNumberPlate() {
   return numberPlate;
 }
 
-function generateEstablishmentUnitNumber() {
+function generateRandomEstablishmentUnitNumber() {
   var firstDigit = randomIntFromInterval(2, 7);
   var nextDigits = randomIntFromInterval(0, 9999999);
 

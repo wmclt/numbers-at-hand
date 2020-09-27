@@ -1,5 +1,3 @@
-// var storageCache = {};
-
 document.addEventListener('DOMContentLoaded', function() {
   loadStorageCacheUI();
 
@@ -14,88 +12,18 @@ document.addEventListener('DOMContentLoaded', function() {
   addSettingSwitch("settingPunctuation", (event) => { updatePunctuation(event.target.checked); });
   addSettingSwitch("settingDarkMode", (event) => { updateDarkMode(event.target.checked); });
 
-  // chrome.storage.onChanged.addListener(function(changes, namespace) {
-  //   for (var key in changes) {
-  //     storageCache[key] = changes[key].newValue;
-  //   }
-  // });
-
 }, false);
 
-// **************************** Core functionality *****************************
+// **************************** Link generators *****************************
 function addGenerators() {
+  //https://stackoverflow.com/questions/256754/how-to-pass-arguments-to-addeventlistener-listener-function
   for (var i = 0; i < generators.length; i++) {
-    addGenerator(generators[i][0], generators[i][1], generators[i][2]);
+    addGenerator(generators[i][0], generators[i][1], function(x) { return function() { processGenerationRequest(x) }; }(generators[i][2]));
   }
 }
 
-function processGenerationRequest(generator) {
-  var nr = generator();
-  copy(nr);
-  setStatus(nr);
-}
-
-function getRandomNumberPlate() {
-  var nr = generateNumberPlate();
-  copy(nr);
-  setStatus(nr);
-}
-
-function getRandomEstablishmentUnitNumber() {
-  var nr = generateEstablishmentUnitNumber();
-  copy(nr);
-  setStatus(nr);
-}
-
-function getNilUuid() {
-  var nr = generateNilUuid();
-  copy(nr);
-  setStatus(nr);
-}
-
-function getV4Uuid() {
-  var nr = generateUUID();
-  copy(nr);
-  setStatus(nr);
-}
-
-function getRandomNssoNumber() {
-  var nr = generateNssoNumber();
-
-  copy(nr);
-  setStatus(nr);
-}
-
-function getRandomCompanyNumber() {
-  var nr = generateRandomCompanyNumber();
-
-  copy(nr);
-  setStatus(nr);
-}
-
-function getRandomVatNumber() {
-  var nr = generateRandomVatNumber();
-
-  copy(nr);
-  setStatus(nr);
-}
-
-function getRandomRrnNumber() {
-  var nr = generateRandomRrnNumber();
-
-  copy(nr);
-  setStatus(nr);
-}
-
-function getRandomIban() {
-  var nr = generateRandomIban();
-
-  copy(nr);
-  setStatus(nr);
-}
-
-function getCurrentUtcDatetime() {
-  var nr = generateCurrentUtcDatetime();
+function processGenerationRequest(generatorId) {
+  var nr = generatorId(); //generators[generatorId][2]();
   copy(nr);
   setStatus(nr);
 }
@@ -298,7 +226,8 @@ _gaq.push(['_trackPageview']);
  */
 function trackButtonClick(e) {
   if (e.target.classList.contains("generator"))
-    _gaq.push(['_trackEvent', 'Number generation', e.target.id, e.target.innerText + " (punct:" + (getPunctuation() ? "Y)" : "N)"), getPunctuation() ?
+    _gaq.push(['_trackEvent', 'Number generation', e.target.id, e.target.innerText + " (punct:" + (getPunctuation() ? "Y)" : "N)"),
+      getPunctuation() ?
       1 : 0
     ]);
   else if (e.target.id == "btn-settings") {
