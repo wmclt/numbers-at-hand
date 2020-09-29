@@ -91,7 +91,7 @@ function generateRandomIban() {
   var accountNbr = randomIntFromInterval(0, 9999999);
 
   var nationalCheck = (10000000 * bankcode + accountNbr) % 97 == 0 ? 97 : (10000000 * bankcode + accountNbr) % 97;
-  var checksum = 98 - modulo('' + (1000000000000000 * bankcode + 100000000 * accountNbr + nationalCheck * 1000000 + 111400), '' + 97);
+  var checksum = 98 - modulo((1000000000000000 * bankcode + 100000000 * accountNbr + nationalCheck * 1000000 + 111400 /*B=11 E=14*/ ), 97);
 
   return "oocc bbba aaaa aann".punctuate()
     .fill("o", country)
@@ -140,20 +140,22 @@ function getPunctuation() {
 }
 
 function modulo(divident, divisor) {
+  var dividentString = divident.toString();
+  var divisorString = divisor.toString();
   var cDivident = '';
   var cRest = '';
 
-  for (var i in divident) {
+  for (var i in dividentString) {
     if (i == "fill" || i == "punctuate")
       break;
 
-    var cChar = divident[i];
+    var cChar = dividentString[i];
     var cOperator = cRest + '' + cDivident + '' + cChar;
 
-    if (cOperator < parseInt(divisor)) {
+    if (cOperator < parseInt(divisorString)) {
       cDivident += '' + cChar;
     } else {
-      cRest = cOperator % divisor;
+      cRest = cOperator % divisorString;
       if (cRest == 0) {
         cRest = '';
       }
