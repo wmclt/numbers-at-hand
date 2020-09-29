@@ -16,7 +16,7 @@
     "default_popup": "popup.html",
     "default_title": "__MSG_extensionhovertext__"
   },
-  "permissions": ["storage", "contextMenus", "webNavigation", "activeTab"],
+  "permissions": ["storage", "contextMenus", "activeTab"],
   "background": {
     "scripts": ["js/common.js", "js/background.js"]
   },
