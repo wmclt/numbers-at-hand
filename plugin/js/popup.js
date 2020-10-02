@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function addGenerators() {
   //https://stackoverflow.com/questions/256754/how-to-pass-arguments-to-addeventlistener-listener-function
   generators.forEach(function(g) {
-    addGenerator(g[0], g[1], function(x) { return function() { processGenerationRequest(x) }; }(g[2]));
+    if (shouldDisplayGenerator(g[3]))
+      addGenerator(g[0], g[1], function(x) { return function() { processGenerationRequest(x) }; }(g[2]));
   });
 }
 

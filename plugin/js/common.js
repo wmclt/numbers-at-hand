@@ -11,17 +11,44 @@ try {
 } catch (e) {}
 
 var generators = [
-  ["sectionPeople", "nationalIdentificationNumber", generateRandomRrnNumber],
-  ["sectionCompanies", "companyNumber", generateRandomCompanyNumber],
-  ["sectionCompanies", "vatNumber", generateRandomVatNumber],
-  ["sectionCompanies", "establishmentUnitNumber", generateRandomEstablishmentUnitNumber],
-  ["sectionCompanies", "nssoNumber", generateRandomNssoNumber],
-  ["sectionOthers", "numberPlate", generateRandomNumberPlate],
-  ["sectionOthers", "iban", generateRandomIban],
-  ["sectionUtilities", "nilUuid", generateNilUuid],
-  ["sectionUtilities", "v4Uuid", generateRandomV4Uuid],
-  ["sectionUtilities", "currentUtcDatetime", generateCurrentUtcDatetime]
+  ["sectionPeople", "nationalIdentificationNumber", generateRandomRrnNumber, "BE"],
+  ["sectionPeople", "nationalIdentificationNumberNL", generateRandomBsn, "NL"],
+  ["sectionCompanies", "companyNumber", generateRandomCompanyNumber, "BE"],
+  ["sectionCompanies", "vatNumber", generateRandomVatNumber, "BE"],
+  ["sectionCompanies", "establishmentUnitNumber", generateRandomEstablishmentUnitNumber, "BE"],
+  ["sectionCompanies", "nssoNumber", generateRandomNssoNumber, "BE"],
+  ["sectionOthers", "numberPlate", generateRandomNumberPlate, "BE"],
+  ["sectionOthers", "iban", generateRandomIban, "BE"],
+  ["sectionUtilities", "nilUuid", generateNilUuid, "-"],
+  ["sectionUtilities", "v4Uuid", generateRandomV4Uuid, "-"],
+  ["sectionUtilities", "currentUtcDatetime", generateCurrentUtcDatetime, "-"]
 ];
+
+function generateRandomBsn() //NL Burgerservicenummer
+{
+  var a = randomIntFromInterval(0, 6);
+  var b = randomIntFromInterval(0, 9);
+  var c = randomIntFromInterval(0, 9);
+  var d = randomIntFromInterval(0, 9);
+  var e = randomIntFromInterval(0, 9);
+  var f = randomIntFromInterval(0, 9);
+  var g = randomIntFromInterval(0, 9);
+  var h = randomIntFromInterval(0, 9);
+
+  if ((a == 0) && (b == 0)) { b = 1; }
+  var SofiNr = 9 * a + 8 * b + 7 * c + 6 * d + 5 * e + 4 * f + 3 * g + 2 * h;
+  var i = Math.floor(SofiNr - (Math.floor(SofiNr / 11)) * 11);
+  if (i > 9) {
+    if (h > 0) {
+      h -= 1;
+      i = 8;
+    } else {
+      h += 1;
+      i = 1;
+    }
+  }
+  return "" + a + b + c + d + e + f + g + h + i;
+}
 
 //https://stackoverflow.com/questions/105034/how-to-create-guid-uuid
 function generateRandomV4Uuid() { // Public Domain/MIT
@@ -125,6 +152,14 @@ function randomIntFromInterval(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function shouldDisplayGenerator(generatorRegion) {
+  if (getRegion() == "*")
+    return true;
+  if (generatorRegion == "-" || generatorRegion == "*")
+    return true;
+  return generatorRegion == getRegion();
+}
+
 function copy(text) {
   var input = document.createElement('input');
   input.setAttribute('value', text);
@@ -137,6 +172,11 @@ function copy(text) {
 
 function getPunctuation() {
   return storageCache.settingPunctuation || storageCache.punctuation; //Backward compatibility ; remove in a next release
+}
+
+function getRegion() {
+  return isDevMode() ? "*" : "BE";
+  //return storageCache.settingRegion;
 }
 
 function modulo(divident, divisor) {

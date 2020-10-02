@@ -18,6 +18,10 @@
     "message": "🇧🇪 National identification number",
     "description": "Identifying number at www.ibz.rrn.fgov.be"
   },
+  "nationalIdentificationNumberNL": {
+    "message": "🇳🇱 National identification number",
+    "description": "www.rijksoverheid.nl/onderwerpen/privacy-en-persoonsgegevens/vraag-en-antwoord/wat-is-het-burgerservicenummer-bsn"
+  },
   "companyNumber": {
     "message": "🇧🇪 Enterprise number",
     "description": "Identifying number at Crossroads Bank for Enterprises. kbopub.economie.fgov.be"

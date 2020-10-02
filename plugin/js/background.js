@@ -18,12 +18,13 @@ var parentId = chrome.contextMenus.create({
 });
 
 for (var i = 0; i < generators.length; i++) {
-  chrome.contextMenus.create({
-    "title": chrome.i18n.getMessage(generators[i][1]),
-    "contexts": ["editable"],
-    "id": generators[i][1],
-    "parentId": parentId
-  });
+  if (shouldDisplayGenerator(generators[i][3]))
+    chrome.contextMenus.create({
+      "title": chrome.i18n.getMessage(generators[i][1]),
+      "contexts": ["editable"],
+      "id": generators[i][1],
+      "parentId": parentId
+    });
 }
 
 chrome.contextMenus.onClicked.addListener(onClickHandler);
