@@ -1,3 +1,17 @@
+// let validator = {
+//   set: function(obj, prop, value) {
+//     // The default behavior to store the value
+//     obj[prop] = value;
+//
+//     chrome.runtime.sendMessage(Message: "settingsUpdated");
+//     // Indicate success
+//     return true;
+//   }
+// };
+//
+// var storageCache = new Proxy({}, validator);
+
+
 var storageCache = {};
 
 loadStorageCacheBackend();
@@ -6,6 +20,8 @@ try {
   chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (var key in changes) {
       storageCache[key] = changes[key].newValue;
+      // chrome.runtime.sendMessage(Message: "settingsUpdated");
+      try { applyContextMenuButtons(); } catch (e) {}
     }
   });
 } catch (e) {}
@@ -35,16 +51,15 @@ function generateRandomBsn() //NL Burgerservicenummer
   var g = randomIntFromInterval(0, 9);
   var h = randomIntFromInterval(0, 9);
 
-  if ((a == 0) && (b == 0)) { b = 1; }
-  var SofiNr = 9 * a + 8 * b + 7 * c + 6 * d + 5 * e + 4 * f + 3 * g + 2 * h;
-  var i = Math.floor(SofiNr - (Math.floor(SofiNr / 11)) * 11);
-  if (i > 9) {
+  if ((a == 0) && (b == 0)) b = 1;
+  var i = (9 * a + 8 * b + 7 * c + 6 * d + 5 * e + 4 * f + 3 * g + 2 * h) % 11;
+  if (i == 10) {
     if (h > 0) {
       h -= 1;
-      i = 8;
+      i -= 2;
     } else {
       h += 1;
-      i = 1;
+      i -= 9;
     }
   }
   return "" + a + b + c + d + e + f + g + h + i;
@@ -170,8 +185,45 @@ function copy(text) {
   return result;
 }
 
+function togglePunctuationBackend() {
+  updateSettingBackend("settingPunctuation", !getPunctuation());
+}
+
 function getPunctuation() {
-  return storageCache.settingPunctuation || storageCache.punctuation; //Backward compatibility ; remove in a next release
+  return storageCache.settingPunctuation;
+}
+
+function setContextActionInjection() {
+  updateSettingBackend("settingContextActionClipboard", false);
+  updateSettingBackend("settingContextActionInjection", true);
+}
+
+function setContextActionClipboard() {
+  updateSettingBackend("settingContextActionClipboard", true);
+  updateSettingBackend("settingContextActionInjection", false);
+}
+
+function setContextActionInjectionAndClipboard() {
+  updateSettingBackend("settingContextActionClipboard", true);
+  updateSettingBackend("settingContextActionInjection", true);
+}
+
+function getContextActionInjection() {
+  return storageCache.settingContextActionInjection;
+}
+
+function getContextActionClipboard() {
+  return storageCache.settingContextActionClipboard;
+}
+
+function updateSettingBackend(key, value) {
+  try {
+    chrome.storage.sync.set({
+      [key]: value
+    });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function getRegion() {
@@ -229,8 +281,18 @@ if (String.prototype.punctuate === undefined) {
 
 function loadStorageCacheBackend() {
   try {
-    chrome.storage.sync.get(['settingPunctuation', 'settingDarkMode'], function(result) {
+    chrome.storage.sync.get([
+      "settingPunctuation",
+      "settingDarkMode",
+      "settingContextActionClipboard",
+      "settingContextActionInjection"
+    ], function(
+      result) {
+      if (typeof result.settingContextActionInjection == 'undefined')
+        result.settingContextActionInjection = true;
+
       storageCache = result;
+      try { applyContextMenuButtons(); } catch (e) {}
     });
   } catch (e) {}
 }

@@ -67,26 +67,21 @@ function isVisible(elementId) {
 }
 
 function updateSetting(key, value) {
-  try {
-    chrome.storage.sync.set({
-      [key]: value
-    });
-  } catch (e) {
-    console.log(e);
-  } finally {
-    var lmnt = document.getElementById("btn-" + key);
-    if (lmnt) {
-      if (value) {
-        lmnt.classList.add("text-enabled");
-        lmnt.classList.remove("text-disabled");
-      } else {
-        lmnt.classList.add("text-disabled");
-        lmnt.classList.remove("text-enabled");
-      }
-    }
+  updateSettingBackend(key, value);
 
-    document.getElementById("chk-" + key).checked = value;
+  var lmnt = document.getElementById("btn-" + key);
+  if (lmnt) {
+    if (value) {
+      lmnt.classList.add("text-enabled");
+      lmnt.classList.remove("text-disabled");
+    } else {
+      lmnt.classList.add("text-disabled");
+      lmnt.classList.remove("text-enabled");
+    }
   }
+
+  document.getElementById("chk-" + key).checked = value;
+
 }
 
 function updatePunctuation(value) {
@@ -103,7 +98,7 @@ function updateDarkMode(value) {
 }
 
 function getDarkMode() {
-  return storageCache.settingDarkMode || storageCache.darkMode; //Backward compatibility ; remove in a next release
+  return storageCache.settingDarkMode;
 }
 
 function togglePunctuation() {
