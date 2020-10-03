@@ -12,18 +12,23 @@ Generate randomized valid Belgian numbers for these types:
 * Number plate _(Nummerplaat / Plaque d'immatriculation / Kfz-Kennzeichen)_
 * IBAN
 
+Generate randomized valid Dutch numbers for these types:
+* National Identification Number _(Burgerservicenummer)_
+
 Generate other useful strings:
 * Nil UUID / randomized v4 UUID
 * Current UTC datetime (ISO 8601)
 
 
 How to use this extension:
-* In any input-field : right-click and select a number-type to fill it in directly
+* In any input-field : right-click and select a number-type to fill it in directly and/or copy it to your clipboard
 * Through the extension popup : select a number-type to copy it to your clipboard
 
-Options can be configured through the popup:
+Options can be configured through the popup and the context-menu:
 * Numbers can be generated either with or without the default punctuation
+* Switch between BE and NL region
 * The popup can be shown in Dark or Light mode
+* Choose what happens when generating a number through context-menu: inject and/or copy to clipboard
 
 
 ## How to use this code
