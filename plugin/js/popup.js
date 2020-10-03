@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.getElementById("btn-settings").addEventListener('click', function() { toggleDisplay("div-settings"); }, false);
   document.getElementById("btn-settingPunctuation").addEventListener('click', function() { togglePunctuation(); }, false);
-  document.getElementById("li-settingRegion").addEventListener('click', function() { selectNextRegion(); }, false);
+  document.getElementById("btn-settingRegion").addEventListener('click', function() { selectNextRegion(); }, false);
 
   addSettingSwitch("settingPunctuation", (event) => { updatePunctuation(event.target.checked); });
   addSettingSwitch("settingDarkMode", (event) => { updateDarkMode(event.target.checked); });
@@ -75,24 +75,27 @@ function isVisible(elementId) {
 function updateSetting(key, value) {
   updateSettingBackend(key, value);
 
-  var lmnt = document.getElementById("btn-" + key);
-  if (lmnt) {
-    if (value) {
-      lmnt.classList.add("text-enabled");
-      lmnt.classList.remove("text-disabled");
-    } else {
-      lmnt.classList.add("text-disabled");
-      lmnt.classList.remove("text-enabled");
+
+  if (key == "settingRegion") {
+    var li = document.getElementById("btn-" + key);
+    if (li)
+      li.innerText = regions[regions.findIndex(x => x[0] == value)][1];
+  } else {
+    var lmnt = document.getElementById("btn-" + key);
+    if (lmnt) {
+      if (value) {
+        lmnt.classList.add("text-enabled");
+        lmnt.classList.remove("text-disabled");
+      } else {
+        lmnt.classList.add("text-disabled");
+        lmnt.classList.remove("text-enabled");
+      }
     }
+
+    var chk = document.getElementById("chk-" + key);
+    if (chk)
+      chk.checked = value;
   }
-
-  var chk = document.getElementById("chk-" + key);
-  if (chk)
-    chk.checked = value;
-
-  var li = document.getElementById("li-" + key);
-  if (li)
-    li.innerText = regions[regions.findIndex(x => x[0] == value)][1];
 }
 
 function updatePunctuation(value) {
@@ -219,7 +222,7 @@ function trackButtonClick(e) {
     _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via settings menu"]);
   } else if (e.target.id == "btn-settingPunctuation") {
     _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via onscreen button"]);
-  } else if (e.target.id == "li-settingRegion") {
+  } else if (e.target.id == "btn-settingRegion") {
     _gaq.push(['_trackEvent', 'Settings', "Switch region away from " + getRegion(), "via onscreen button"]);
   } else {
     _gaq.push(['_trackEvent', 'Unclassified', e.target.id, e.target.innerText]);
