@@ -54,21 +54,21 @@ function applyContextMenuButtons() {
 
   chrome.contextMenus.create({
     "contexts": ["editable"],
-    "title": "Inject",
+    "title": chrome.i18n.getMessage("modeInject"),
     "type": "radio",
     "id": "modeInject",
     "checked": getContextActionInjection() && !getContextActionClipboard()
   });
   chrome.contextMenus.create({
     "contexts": ["editable"],
-    "title": "Inject + copy to clipboard",
+    "title": chrome.i18n.getMessage("modeInjectClipboard"),
     "type": "radio",
     "id": "modeInjectClipboard",
     "checked": getContextActionClipboard() && getContextActionInjection()
   });
   chrome.contextMenus.create({
     "contexts": ["editable"],
-    "title": "Copy to clipboard",
+    "title": chrome.i18n.getMessage("modeClipboard"),
     "type": "radio",
     "id": "modeClipboard",
     "checked": getContextActionClipboard() && !getContextActionInjection()
@@ -82,7 +82,7 @@ function applyContextMenuButtons() {
 
   chrome.contextMenus.create({
     "contexts": ["editable"],
-    "title": "Punctuation",
+    "title": chrome.i18n.getMessage("settingPunctuation"),
     "type": "checkbox",
     "id": "settingPunctuation",
     "checked": getPunctuation()

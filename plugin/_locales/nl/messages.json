@@ -69,5 +69,14 @@
   },
   "vatNumber": {
     "message": "🇧🇪 BTW-nummer"
+  },
+  "modeInject": {
+    "message": "Injecteer"
+  },
+  "modeInjectClipboard": {
+    "message": "Injecteer + kopieer naar klembord"
+  },
+  "modeClipboard": {
+    "message": "Kopieer naar klembord"
   }
 }

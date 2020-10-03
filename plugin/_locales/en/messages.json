@@ -75,5 +75,14 @@
   },
   "vatNumber": {
     "message": "🇧🇪 VAT number"
+  },
+  "modeInject": {
+    "message": "Inject"
+  },
+  "modeInjectClipboard": {
+    "message": "Inject + copy to clipboard"
+  },
+  "modeClipboard": {
+    "message": "Copy to clipboard"
   }
 }
