@@ -1,20 +1,17 @@
-try {
-  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if (message == "settingsUpdated")
-      applyContextMenuButtons();
-  });
-} catch (e) {}
-
 function onClickHandler(info, tab) {
-  if (info.menuItemId == "modeInject")
+  if (info.menuItemId == "modeInject") {
     setContextActionInjection();
-  else if (info.menuItemId == "modeInjectClipboard")
+    _gaq.push(['_trackEvent', 'Settings', "Set ContextAction Injection", "via context menu"]);
+  } else if (info.menuItemId == "modeInjectClipboard") {
     setContextActionInjectionAndClipboard();
-  else if (info.menuItemId == "modeClipboard")
+    _gaq.push(['_trackEvent', 'Settings', "Set ContextAction Injection + Clipboard", "via context menu"]);
+  } else if (info.menuItemId == "modeClipboard") {
     setContextActionClipboard();
-  else if (info.menuItemId == "settingPunctuation")
+    _gaq.push(['_trackEvent', 'Settings', "Set ContextAction Clipboard", "via context menu"]);
+  } else if (info.menuItemId == "settingPunctuation") {
     togglePunctuationBackend();
-  else {
+    _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via context menu"]);
+  } else {
     var g = generators.filter(x => x[1] == info.menuItemId)[0][2];
     var value = g();
 

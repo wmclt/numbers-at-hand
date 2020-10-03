@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
   loadStorageCacheUI();
 
-  addGenerators();
+  addGenerators(getRegion());
 
   initUiValue("title", "extensionname");
   initUiValue("div-status", "defaultStatus");
 
   document.getElementById("btn-settings").addEventListener('click', function() { toggleDisplay("div-settings"); }, false);
   document.getElementById("btn-settingPunctuation").addEventListener('click', function() { togglePunctuation(); }, false);
+  document.getElementById("li-settingRegion").addEventListener('click', function() { selectNextRegion(); }, false);
 
   addSettingSwitch("settingPunctuation", (event) => { updatePunctuation(event.target.checked); });
   addSettingSwitch("settingDarkMode", (event) => { updateDarkMode(event.target.checked); });
@@ -15,10 +16,15 @@ document.addEventListener('DOMContentLoaded', function() {
 }, false);
 
 // **************************** Link generators *****************************
-function addGenerators() {
+function addGenerators(region) {
+  const myNode = document.getElementById('div-generators');
+  while (myNode.lastElementChild) {
+    myNode.removeChild(myNode.lastElementChild);
+  }
+
   //https://stackoverflow.com/questions/256754/how-to-pass-arguments-to-addeventlistener-listener-function
   generators.forEach(function(g) {
-    if (shouldDisplayGenerator(g[3]))
+    if (shouldDisplayGenerator(g[3], region))
       addGenerator(g[0], g[1], function(x) { return function() { processGenerationRequest(x) }; }(g[2]));
   });
 }
@@ -80,8 +86,13 @@ function updateSetting(key, value) {
     }
   }
 
-  document.getElementById("chk-" + key).checked = value;
+  var chk = document.getElementById("chk-" + key);
+  if (chk)
+    chk.checked = value;
 
+  var li = document.getElementById("li-" + key);
+  if (li)
+    li.innerText = regions[regions.findIndex(x => x[0] == value)][1];
 }
 
 function updatePunctuation(value) {
@@ -105,22 +116,33 @@ function togglePunctuation() {
   updatePunctuation(!getPunctuation());
 }
 
+function updateRegion(value) {
+  updateSetting("settingRegion", value);
+  addGenerators(value);
+}
+
+function selectNextRegion() {
+  var current = getRegion();
+  var next = (regions.findIndex(x => x[0] == current) + 1) % regions.length;
+  updateRegion(regions[next][0]);
+}
+
 function toggleDarkMode() {
   updateDarkMode(!getDarkMode());
 }
 
 function loadStorageCacheUI() {
   try {
-    chrome.storage.sync.get(['settingPunctuation', 'settingDarkMode'], function(result) {
+    chrome.storage.sync.get(["settingPunctuation", "settingDarkMode", "settingRegion"], function(result) {
       storageCache = result;
       updatePunctuation(result.settingPunctuation);
       updateDarkMode(result.settingDarkMode);
+      updateRegion(result.settingRegion);
+
       _gaq.push(['_setCustomVar', 1, 'DarkMode', result.settingDarkMode ? "dark" : "light", 1]); //TODO: This does not work ?? - debug needed
       _gaq.push(['_trackEvent', 'Storage cache load', 'DarkMode ' + (result.settingDarkMode ? "on" : "off")]);
     });
-  } catch (e) {
-
-  }
+  } catch (e) {}
 }
 
 // **************************** Setup functions ******************************
@@ -197,6 +219,8 @@ function trackButtonClick(e) {
     _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via settings menu"]);
   } else if (e.target.id == "btn-settingPunctuation") {
     _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via onscreen button"]);
+  } else if (e.target.id == "li-settingRegion") {
+    _gaq.push(['_trackEvent', 'Settings', "Switch region away from " + getRegion(), "via onscreen button"]);
   } else {
     _gaq.push(['_trackEvent', 'Unclassified', e.target.id, e.target.innerText]);
   }

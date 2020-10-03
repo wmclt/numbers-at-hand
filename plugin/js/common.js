@@ -1,17 +1,3 @@
-// let validator = {
-//   set: function(obj, prop, value) {
-//     // The default behavior to store the value
-//     obj[prop] = value;
-//
-//     chrome.runtime.sendMessage(Message: "settingsUpdated");
-//     // Indicate success
-//     return true;
-//   }
-// };
-//
-// var storageCache = new Proxy({}, validator);
-
-
 var storageCache = {};
 
 loadStorageCacheBackend();
@@ -20,11 +6,15 @@ try {
   chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (var key in changes) {
       storageCache[key] = changes[key].newValue;
-      // chrome.runtime.sendMessage(Message: "settingsUpdated");
       try { applyContextMenuButtons(); } catch (e) {}
     }
   });
 } catch (e) {}
+
+var regions = [
+  ["BE", "🇧🇪"],
+  ["NL", "🇳🇱"]
+];
 
 var generators = [
   ["sectionPeople", "nationalIdentificationNumber", generateRandomRrnNumber, "BE"],
@@ -93,7 +83,7 @@ function generateRandomNssoNumber() {
     .fill("c", control);
 }
 
-function generateRandomCompanyNumber() { //1878.924.444
+function generateRandomCompanyNumber() {
   var base = randomIntFromInterval(2000000, 19999999);
   var control = 97 - base % 97;
 
@@ -167,12 +157,12 @@ function randomIntFromInterval(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function shouldDisplayGenerator(generatorRegion) {
-  if (getRegion() == "*")
+function shouldDisplayGenerator(generatorRegion, region = getRegion()) {
+  if (region == "*")
     return true;
   if (generatorRegion == "-" || generatorRegion == "*")
     return true;
-  return generatorRegion == getRegion();
+  return generatorRegion == region;
 }
 
 function copy(text) {
@@ -227,8 +217,7 @@ function updateSettingBackend(key, value) {
 }
 
 function getRegion() {
-  return isDevMode() ? "*" : "BE";
-  //return storageCache.settingRegion;
+  return storageCache.settingRegion;
 }
 
 function modulo(divident, divisor) {
@@ -285,11 +274,14 @@ function loadStorageCacheBackend() {
       "settingPunctuation",
       "settingDarkMode",
       "settingContextActionClipboard",
-      "settingContextActionInjection"
+      "settingContextActionInjection",
+      "settingRegion"
     ], function(
       result) {
       if (typeof result.settingContextActionInjection == 'undefined')
         result.settingContextActionInjection = true;
+      if (typeof result.settingRegion == 'undefined')
+        result.settingRegion = "BE";
 
       storageCache = result;
       try { applyContextMenuButtons(); } catch (e) {}
