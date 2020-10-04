@@ -221,9 +221,9 @@ function trackButtonClick(e) {
   } else if (e.target.id == "chk-settingPunctuation") {
     _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via settings menu"]);
   } else if (e.target.id == "btn-settingPunctuation") {
-    _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via onscreen button"]);
+    _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Enable" : "Disable") + " punctuation", "via onscreen button"]);
   } else if (e.target.id == "btn-settingRegion") {
-    _gaq.push(['_trackEvent', 'Settings', "Switch region away from " + getRegion(), "via onscreen button"]);
+    _gaq.push(['_trackEvent', 'Settings', "Switch region to " + getRegion(), "via onscreen button"]);
   } else {
     _gaq.push(['_trackEvent', 'Unclassified', e.target.id, e.target.innerText]);
   }

@@ -211,6 +211,7 @@ function updateSettingBackend(key, value) {
     chrome.storage.sync.set({
       [key]: value
     });
+    storageCache[key] = value;
   } catch (e) {
     console.log(e);
   }

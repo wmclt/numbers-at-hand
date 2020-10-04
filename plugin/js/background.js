@@ -10,7 +10,7 @@ function onClickHandler(info, tab) {
     _gaq.push(['_trackEvent', 'Settings', "Set ContextAction Clipboard", "via context menu"]);
   } else if (info.menuItemId == "settingPunctuation") {
     togglePunctuationBackend();
-    _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via context menu"]);
+    _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Enable" : "Disable") + " punctuation", "via context menu"]);
   } else {
     var g = generators.filter(x => x[1] == info.menuItemId)[0][2];
     var value = g();
