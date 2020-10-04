@@ -217,9 +217,9 @@ function trackButtonClick(e) {
   else if (e.target.id == "btn-settings") {
     _gaq.push(['_trackEvent', 'Settings', (isVisible("div-settings") ? "Open" : "Close") + " settings menu"]);
   } else if (e.target.id == "chk-settingDarkMode") {
-    _gaq.push(['_trackEvent', 'Settings', (getDarkMode() ? "Disable" : "Enable") + " dark mode"]);
+    _gaq.push(['_trackEvent', 'Settings', (e.target.checked ? "Enable" : "Disable") + " dark mode"]);
   } else if (e.target.id == "chk-settingPunctuation") {
-    _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Disable" : "Enable") + " punctuation", "via settings menu"]);
+    _gaq.push(['_trackEvent', 'Settings', (e.target.checked ? "Enable" : "Disable") + " punctuation", "via settings menu"]);
   } else if (e.target.id == "btn-settingPunctuation") {
     _gaq.push(['_trackEvent', 'Settings', (getPunctuation() ? "Enable" : "Disable") + " punctuation", "via onscreen button"]);
   } else if (e.target.id == "btn-settingRegion") {
