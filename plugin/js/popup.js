@@ -137,6 +137,11 @@ function toggleDarkMode() {
 function loadStorageCacheUI() {
   try {
     chrome.storage.sync.get(["settingPunctuation", "settingDarkMode", "settingRegion"], function(result) {
+      if (typeof result.settingContextActionInjection == 'undefined')
+        result.settingContextActionInjection = true;
+      if (typeof result.settingRegion == 'undefined')
+        result.settingRegion = "BE";
+
       storageCache = result;
       updatePunctuation(result.settingPunctuation);
       updateDarkMode(result.settingDarkMode);
