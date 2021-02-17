@@ -34,6 +34,10 @@
     "message": "🇧🇪 IBAN",
     "description": "International Bank Account Number"
   },
+  "bic": {
+    "message": "🇧🇪 BIC",
+    "description": "SWIFT Business Identifier Codes"
+  },
   "defaultStatus": {
     "message": "Click a number-type to generate it"
   },

@@ -25,6 +25,7 @@ var generators = [
   ["sectionCompanies", "nssoNumber", generateRandomNssoNumber, "BE"],
   ["sectionOthers", "numberPlate", generateRandomNumberPlate, "BE"],
   ["sectionOthers", "iban", generateRandomIban, "BE"],
+  ["sectionOthers", "bic", generateRandomBic, "BE"],
   ["sectionUtilities", "nilUuid", generateNilUuid, "-"],
   ["sectionUtilities", "v4Uuid", generateRandomV4Uuid, "-"],
   ["sectionUtilities", "currentUtcDatetime", generateCurrentUtcDatetime, "-"]
@@ -131,6 +132,23 @@ function generateRandomIban() {
     .fill("b", bankcode)
     .fill("a", accountNbr)
     .fill("n", nationalCheck);
+}
+
+
+function generateRandomBic() {
+  //https://www.nbb.be/en/payments-and-securities/payment-standards/bank-identification-codes
+  var listOfBics = ["ABERBE22", "ABNABE2AIDJ", "ABNABE2AIPC", "ABNABE2AXXX", "ADIABE22", "ARSPBE22", "AXABBE22", "BARBBEBB", "BARCBEBB", "BBRUBEBB",
+    "BBVABEBB", "BCDMBEBB", "BCMCBEBB", "BIBLBE21", "BKCHBEBB", "BKIDBE22", "BLUXBEBB", "BMEUBEB1", "BMPBBEBB", "BMPBBEBBVOD", "BNAGBEBB",
+    "BOFABE3X", "BOTKBEBX", "BPOTBEB1", "BSCHBEBB", "BSCHBEBBRET", "BYBBBEBB", "CBPXBE99", "CEKVBE88", "CEPABEB2", "CFFRBEB1", "CHASBEBX",
+    "CITIBEBX", "CLIQBEB1", "CMCIBEB1BTB", "CMCIBEB1CIC", "COBABEBX", "CPHBBE75", "CREGBEBB", "CRLYBEBB", "CTBKBEBX", "CVMCBEBB", "DEGRBEBB",
+    "DELEBE22", "DEUTBEBE", "DHBNBEBB", "DIERBE21", "DNIBBE21", "EBPBBEB1", "ENIBBEBB", "EPBFBEBB", "EURBBE99", "FMMSBEB1", "FVLBBE22", "FXBBBEBB",
+    "GEBABEBB", "GKCCBEBB", "GOCFBEB1", "HABBBEBB", "HSBCBEBB", "ICBKBEBB", "IRVTBEBB", "ISAEBEBB", "JPMGBEBB", "JVBABE22", "KEYTBEBB", "KREDBEBB",
+    "LOCYBEBB", "MBWMBEBB", "MGTCBEBE", "MHCBBEBB", "MTPSBEBB", "NBBEBEBB203", "NBBEBEBBHCC", "NEECBEB2", "NICABEBB", "OONXBEBB", "PANXBEB1",
+    "PARBBEBZMDC", "PCHQBEBB", "PESOBEB1", "PRIBBEBB", "PUILBEBB", "RABOBE22", "RABOBE23", "RCBPBEBB", "SBINBE2X", "SGABBEB2", "SHIZBEBB",
+    "SMBCBEBB", "TRIOBEBB", "TRWIBEB1", "TUNZBEB1", "UTWBBEBB", "VAPEBE22", "VDSPBE91", "VPAYBE21", "WAFABEBB"
+  ]
+
+  return listOfBics[Math.floor(Math.random() * listOfBics.length)];
 }
 
 function generateRandomNumberPlate() {
