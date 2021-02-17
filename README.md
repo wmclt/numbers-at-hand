@@ -11,6 +11,7 @@ Generate randomized valid Belgian numbers for these types:
 * NSSO number _(RSZ-nummer / Numéro ONSS / LSS-Nummer)_
 * Number plate _(Nummerplaat / Plaque d'immatriculation / Kfz-Kennzeichen)_
 * IBAN
+* BIC
 
 Generate randomized valid Dutch numbers for these types:
 * National Identification Number _(Burgerservicenummer)_
@@ -34,7 +35,6 @@ Options can be configured through the popup and the context-menu:
 ## How to use this code
 
 Install the extension from the [Chrome web store](https://chrome.google.com/webstore/detail/numbers-at-hand/jncgcehddiijpaiopleohniplpafmmio)
-
 
 ## Similar tools
 
