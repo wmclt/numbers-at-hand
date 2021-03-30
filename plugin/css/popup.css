@@ -1,5 +1,6 @@
 html {
-  width: 300px;
+  min-width: 280px;
+  overflow-x: hidden;
 }
 
 .list-group-header {

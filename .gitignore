@@ -1,1 +1,3 @@
-plugin.zip
+*.zip
+*.pem
+*.crx
