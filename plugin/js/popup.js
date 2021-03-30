@@ -52,7 +52,7 @@ function setStatus(text) {
   }
 
   var stat = document.getElementById('div-status');
-  stat.innerHTML = str;
+  stat.innerText = str;
   stat.classList.add("list-group-item-success");
   stat.classList.remove("list-group-item-secondary");
 }
@@ -161,7 +161,7 @@ function addGeneratorSection(messageId) {
 
   let header = document.createElement('div');
   header.className = 'list-group-item list-group-item-secondary list-group-header small font-weight-bold';
-  header.innerHTML = geti18n(messageId);
+  header.innerText = geti18n(messageId);
   section.appendChild(header);
 
   document.getElementById('div-generators').appendChild(section);
@@ -175,7 +175,7 @@ function addGenerator(menuId, messageId, func) {
   lmnt.href = '#';
   lmnt.className = 'list-group-item list-group-item-action list-group-compact generator';
   lmnt.id = messageId;
-  lmnt.innerHTML = geti18n(messageId);
+  lmnt.innerText = geti18n(messageId);
   lmnt.addEventListener('click', func, false);
   lmnt.addEventListener('mouseout', function() { resetStatus(); }, false);
 
@@ -199,7 +199,7 @@ function addSettingSwitch(messageId, func) {
   label.className = 'custom-control-label';
   label.htmlFor = "chk-" + messageId;
   label.id = "lbl-" + messageId;
-  label.innerHTML = geti18n(messageId);
+  label.innerText = geti18n(messageId);
   div.appendChild(label);
 
   document.getElementById("div-settings").appendChild(div);
@@ -208,7 +208,7 @@ function addSettingSwitch(messageId, func) {
 
 function initUiValue(elementId, messageId) {
   try {
-    document.getElementById(elementId).innerHTML = geti18n(messageId);
+    document.getElementById(elementId).innerText = geti18n(messageId);
   } catch (err) {
     ; //[Uncaught TypeError: Cannot read property 'getMessage' of undefined] if webpage loaded directly
   }
