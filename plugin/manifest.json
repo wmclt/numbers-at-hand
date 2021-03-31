@@ -29,7 +29,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "numbersathand@example.org",
-      "strict_min_version": "48.0"
+      "strict_min_version": "53.0"
     }
   },
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://www.google-analytics.com https://www.googletagmanager.com ; object-src 'self'"
