@@ -178,6 +178,7 @@ function addGenerator(menuId, messageId, func) {
   lmnt.innerText = geti18n(messageId);
   lmnt.addEventListener('click', func, false);
   lmnt.addEventListener('mouseout', function() { resetStatus(); }, false);
+  lmnt.addEventListener('click', trackButtonClick);
 
   menu.appendChild(lmnt);
   return lmnt;
