@@ -124,7 +124,7 @@ function generateRandomIban() {
   var accountNbr = randomIntFromInterval(0, 9999999);
 
   var nationalCheck = (10000000 * bankcode + accountNbr) % 97 == 0 ? 97 : (10000000 * bankcode + accountNbr) % 97;
-  var checksum = 98 - modulo((1000000000000000 * bankcode + 100000000 * accountNbr + nationalCheck * 1000000 + 111400 /*B=11 E=14*/ ), 97);
+  var checksum = 98 - modulo(''.concat(bankcode, accountNbr, nationalCheck, 11 /*B*/ , 14 /*E*/ , "00"), 97);
 
   return "oocc bbba aaaa aann".punctuate()
     .fill("o", country)
