@@ -1,3 +1,5 @@
+**This is a fork of philipdeherdt/numbers-at-hand in order to add Firefox support.**
+
 # Numbers at hand
 A Chrome extension that allows you to generate randomized valid numbers that can identify people, companies, etc.
 Suggested use case: generate randomized test-data that passes validation checks.
