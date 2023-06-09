@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   addGenerators(getRegion());
 
-  initUiValue("title", "extensionname");
+  initUiValue("title", "extensionName");
   initUiValue("div-status", "defaultStatus");
 
   document.getElementById("btn-settings").addEventListener('click', function() { toggleDisplay("div-settings"); }, false);

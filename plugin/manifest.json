@@ -1,9 +1,10 @@
 {
   "manifest_version": 2,
 
-  "name": "__MSG_extensionname__",
-  "description": "__MSG_extensiondescription__",
-  "version": "1.13",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "homepage_url": "https://github.com/wmclt/numbers-at-hand",
+  "version": "1.14",
   "default_locale": "en",
 
   "browser_action": {
@@ -14,7 +15,7 @@
       "128": "icons/Icon-128.png"
     },
     "default_popup": "popup.html",
-    "default_title": "__MSG_extensionhovertext__"
+    "default_title": "__MSG_extensionHoverText__"
   },
   "permissions": ["storage", "contextMenus", "activeTab"],
   "background": {

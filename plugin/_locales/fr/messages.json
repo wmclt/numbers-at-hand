@@ -1,11 +1,11 @@
 {
-	"extensionname": {
+	"extensionName": {
 		"message": "Numbers at hand"
 	},
-	"extensiondescription": {
+	"extensionDescription": {
 		"message": "Cette extension vous permet de générer des numéros valides qui peuvent identifier des personnes, des entreprises, etc."
 	},
-	"extensionhovertext": {
+	"extensionHoverText": {
 		"message": "Numbers at hand"
 	},
 	"nilUuid": {
