@@ -1,5 +1,3 @@
-**This is a fork of philipdeherdt/numbers-at-hand in order to add Firefox support.**
-
 # Numbers at hand
 A Chrome extension that allows you to generate randomized valid numbers that can identify people, companies, etc.
 Suggested use case: generate randomized test-data that passes validation checks.
@@ -43,3 +41,6 @@ Install the extension from the [Chrome web store](https://chrome.google.com/webs
 If you're looking for generators for other kinds of randomized test-data, you might like these:
 * [Bug Magnet](https://bugmagnet.org/)
 * [Mobilefish Test data generator](https://www.mobilefish.com/services/random_test_data_generator/random_test_data_generator.php)
+
+## Credits
+This is a fork from the repo: philipdeherdt/numbers-at-hand. This fork has as goal allowing this extension to run in Firefox.
